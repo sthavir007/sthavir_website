@@ -19,8 +19,11 @@ export default function Research() {
             home
           </a>
         </div>
-        <div className="text-sm">
-          <a href="/interests" className="hover:text-red-500 transition-colors">
+        <div className="text-sm flex space-x-4">
+          <a href="/programs" className="underline hover:no-underline hover:text-red-500 transition-colors">
+            programs
+          </a>
+          <a href="/interests" className="underline hover:no-underline hover:text-red-500 transition-colors">
             interests
           </a>
         </div>

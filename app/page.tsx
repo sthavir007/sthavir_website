@@ -36,6 +36,9 @@ export default function Home() {
           <a href="/research" className="underline hover:no-underline hover:text-red-500 transition-colors">
             research
           </a>
+          <a href="/programs" className="underline hover:no-underline hover:text-red-500 transition-colors">
+            programs
+          </a>
           <a href="/interests" className="underline hover:no-underline hover:text-red-500 transition-colors">
             interests
           </a>

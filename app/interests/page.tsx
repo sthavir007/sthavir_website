@@ -9,9 +9,12 @@ export default function Interests() {
             home
           </a>
         </div>
-        <div className="text-sm">
+        <div className="text-sm flex space-x-4">
           <a href="/research" className="underline hover:no-underline hover:text-red-500 transition-colors">
             research
+          </a>
+          <a href="/programs" className="underline hover:no-underline hover:text-red-500 transition-colors">
+            programs
           </a>
         </div>
       </header>
@@ -24,11 +27,39 @@ export default function Interests() {
             <ul className="space-y-2">
               <li className="flex items-center">
                 <span className="mr-3">•</span>
-                ophthalmology
+                <a
+                  href="https://www.frontiersin.org/journals/cellular-neuroscience/articles/10.3389/fncel.2020.00171/full"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline hover:no-underline hover:text-red-500 transition-colors"
+                >
+                  ophthalmology
+                </a>
               </li>
               <li className="flex items-center">
                 <span className="mr-3">•</span>
-                concerts should be banned @circus maximus
+                <a
+                  href="https://github.com/10XGenomics/cellranger"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline hover:no-underline hover:text-red-500 transition-colors"
+                >
+                  computational genomics
+                </a>
+              </li>
+              <li className="flex items-center">
+                <span className="mr-3">•</span>
+                <span>
+                  concerts should be banned @
+                  <a
+                    href="https://docs.google.com/document/d/1-fkoHSkkQf6mRMDMS4xp49RV51WZfw-3S-cBF41TXUA/edit?usp=sharing"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline hover:no-underline hover:text-red-500 transition-colors"
+                  >
+                    circus maximus
+                  </a>
+                </span>
               </li>
               <li className="flex items-center">
                 <span className="mr-3">•</span>
@@ -71,10 +102,6 @@ export default function Interests() {
               </li>
               <li className="flex items-center">
                 <span className="mr-3">•</span>
-                desk setups for productivity
-              </li>
-              <li className="flex items-center">
-                <span className="mr-3">•</span>
                 <a
                   href="https://monkeytype.com/"
                   target="_blank"
@@ -87,17 +114,13 @@ export default function Interests() {
               <li className="flex items-center">
                 <span className="mr-3">•</span>
                 <a
-                  href="https://apple.fandom.com/wiki/Mac_Pro_(2nd_generation)"
+                  href="https://www.gordonmurrayautomotive.com/automotive/t50"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="underline hover:no-underline hover:text-red-500 transition-colors"
                 >
-                  mac trash can
+                  gordon murray t.50
                 </a>
-              </li>
-              <li className="flex items-center">
-                <span className="mr-3">•</span>
-                gordon murray t.50
               </li>
               <li className="flex items-center">
                 <span className="mr-3">•</span>
@@ -117,7 +140,47 @@ export default function Interests() {
               </li>
               <li className="flex items-center">
                 <span className="mr-3">•</span>
-                <span className="text-red-600">red</span>&nbsp;is cool
+                <a
+                  href="https://www.uffizi.it/en/artworks/the-tribune"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline hover:no-underline hover:text-red-500 transition-colors"
+                >
+                  The Tribune: Bernardo Buontalenti
+                </a>
+              </li>
+              <li className="flex items-center">
+                <span className="mr-3">•</span>
+                <a
+                  href="https://www.youtube.com/watch?v=3s0LTDhqe5A"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline hover:no-underline hover:text-red-500 transition-colors"
+                >
+                  My Octopus Teacher
+                </a>
+              </li>
+              <li className="flex items-center">
+                <span className="mr-3">•</span>
+                <a
+                  href="https://www.youtube.com/watch?v=rcQ_xZdzPBc"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline hover:no-underline hover:text-red-500 transition-colors"
+                >
+                  Farzi
+                </a>
+              </li>
+              <li className="flex items-center">
+                <span className="mr-3">•</span>
+                <a
+                  href="https://www.youtube.com/@Waveform"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline hover:no-underline hover:text-red-500 transition-colors"
+                >
+                  WVFRM Podcast
+                </a>
               </li>
             </ul>
           </div>
