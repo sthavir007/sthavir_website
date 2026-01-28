@@ -39,7 +39,7 @@ export default function Programs() {
                   </a>
                 </h2>
                 <p className="text-gray-600 text-sm">
-                  A research collective at UT Austin rethinking how we read ancient texts. They build computational tools to analyze Latin and Greek literature at scale—tracking stylistic patterns, authorship signals, and linguistic shifts that would take lifetimes to uncover by hand.
+                  A research group at The University of Texas at Austin that develops computational methods for analyzing classical Latin and Greek texts. The lab applies natural language processing and machine learning to study stylistic patterns, authorship attribution, and linguistic evolution across ancient literature.
                 </p>
               </div>
 
@@ -55,7 +55,7 @@ export default function Programs() {
                   </a>
                 </h2>
                 <p className="text-gray-600 text-sm">
-                  Two weeks of wrangling single-cell RNA-seq data on Harvard's O2 supercomputer. Think terabytes of gene expression matrices, custom pipelines, and learning to speak fluent Seurat while your laptop quietly overheats.
+                  A two-week intensive program at Harvard Medical School focused on single-cell RNA sequencing analysis. Participants process large-scale gene expression datasets using the O2 high-performance computing cluster and learn computational pipelines including Cell Ranger and Seurat for single-cell transcriptomics.
                 </p>
               </div>
 
@@ -71,7 +71,7 @@ export default function Programs() {
                   </a>
                 </h2>
                 <p className="text-gray-600 text-sm">
-                  Eight weeks embedded with GMU faculty doing real research. Spent my time building spatial analysis models in ArcGIS, mapping urban heat vulnerability across NYC neighborhoods and figuring out which census tracts are quietly cooking.
+                  An eight-week research internship at George Mason University where students work alongside faculty mentors on original projects. Research involved building spatial analysis models using ArcGIS to map urban heat vulnerability and cooling center access across New York City neighborhoods.
                 </p>
               </div>
 
@@ -95,7 +95,7 @@ export default function Programs() {
                   </a>
                 </h2>
                 <p className="text-gray-600 text-sm">
-                  A week-long deep dive into the weird and wonderful world of building things. Toured early-stage startups, picked locks (legally), learned sword-fighting basics, and had too many conversations about why dropping out isn't always a bad idea.
+                  A one-week program hosted by the 1517 Fund for twice-exceptional students interested in entrepreneurship and unconventional education. Activities included visiting early-stage startups, attending workshops on practical skills such as lockpicking and sword-fighting, and participating in discussions on alternative paths to building companies.
                 </p>
               </div>
           </div>
