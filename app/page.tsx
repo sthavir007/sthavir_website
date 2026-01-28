@@ -144,7 +144,7 @@ export default function Home() {
             </button>
             <div className="text-base leading-relaxed">
               <p>
-                hi! my name is sthavir vinjamuri. i'm a senior at{" "}
+                welcome to my website! i'm a senior at{" "}
                 <a
                   href="https://tjhsst.fcps.edu/"
                   target="_blank"
@@ -153,7 +153,7 @@ export default function Home() {
                 >
                   thomas jefferson high school for science and technology
                 </a>
-                . i am currently interested in computational genomics, population health, latin-language education reform, and sustainability in quantum chemistry.
+                , currently interested in computational genomics, population health, latin-language education reform, and sustainability in quantum chemistry.
               </p>
             </div>
           </div>

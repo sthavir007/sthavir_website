@@ -42,7 +42,15 @@ export default function Awards() {
                     >
                       United States Medical & Disease Olympiad
                     </a>
-                    {" "}– Top 6%, Silver Medal
+                    {" "}– Top 6%,{" "}
+                    <a
+                      href="https://www.usmdo.org/results"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="underline hover:no-underline hover:text-red-500 transition-colors"
+                    >
+                      Silver Medal
+                    </a>
                   </span>
                 </li>
                 <li className="flex items-start">
