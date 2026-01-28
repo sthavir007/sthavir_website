@@ -55,7 +55,7 @@ export default function Programs() {
                   </a>
                 </h2>
                 <p className="text-gray-600 text-sm">
-                  A two-week intensive program at Harvard Medical School focused on single-cell RNA sequencing analysis. Participants process large-scale gene expression datasets using the O2 high-performance computing cluster and learn computational pipelines including Cell Ranger and Seurat for single-cell transcriptomics.
+                  An intensive program at Harvard Medical School focused on single-cell RNA sequencing analysis. Participants process large-scale gene expression datasets using the O2 high-performance computing cluster and learn computational pipelines including Cell Ranger and Seurat for single-cell transcriptomics.
                 </p>
               </div>
 
