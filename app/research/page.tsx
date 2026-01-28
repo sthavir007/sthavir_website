@@ -106,11 +106,33 @@ export default function Research() {
                 </button>
               </h2>
               <p className="text-gray-600 mb-2">Poster presented at 2025 ASSIP Poster Fair</p>
+              <p className="text-gray-600 mb-2">Conducted at Chemical Analysis & Nanochemistry Lab</p>
               <p className="leading-relaxed">
                 This project applies a spatial mismatch framework to quantify where heat hazard exceeds cooling access
                 in New York City, integrating FEMA NRI metrics, cooling-access measures, and demographic data to
                 identify high-risk, low-access clusters and produce actionable targets for equitable cooling center
                 placement.
+              </p>
+            </div>
+
+            <div className="border-b border-gray-300 pb-6">
+              <h2 className="text-lg font-semibold mb-3">
+                Evaluating AI-Generated Latin Narratives for Early Language Learners
+              </h2>
+              <p className="text-gray-600 mb-2">IRB submitted</p>
+              <p className="text-gray-600 mb-2">Conducted at Harvard University and The University of Texas at Austin</p>
+              <p className="leading-relaxed">
+                This study investigates the use of large language models to generate and assess the teaching efficacy of Latin-adapted superhero stories for early learners. The research addresses a gap in accessible Latin pedagogy materials by leveraging LLMs to produce engaging, level-appropriate narratives based on established curricula such as the Cambridge Latin Course. Methods include prompt engineering with n-shot examples, parameter tuning aligned with Junior Classical League standards, and a mixed-methods evaluation combining in-class studies with self-reported learner outcomes. The project aims to provide data-driven insights into modern approaches to classical language instruction.
+              </p>
+            </div>
+
+            <div className="border-b border-gray-300 pb-6">
+              <h2 className="text-lg font-semibold mb-3">
+                The Effect of Synthesis Method and Starting Materials on the Yield and Viability of Quantum Dots
+              </h2>
+              <p className="text-gray-600 mb-2">Conducted at Chemical Analysis & Nanochemistry Lab</p>
+              <p className="leading-relaxed">
+                This study demonstrates the synthesis and characterization of carbon quantum dots produced from lemon juice and branched polyethylenimine using a simple one-pot heating method. Unlike semiconductor quantum dots containing toxic heavy metals, these carbon-based nanoparticles offer strong optical performance without environmental hazards. The particles were analyzed through UV-visible absorbance spectroscopy, fluorescence emission analysis, quantum yield measurements, and particle size distribution to evaluate their potential for practical water and air quality monitoring applications.
               </p>
             </div>
           </div>
