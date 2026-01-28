@@ -23,6 +23,9 @@ export default function Research() {
           <a href="/programs" className="underline hover:no-underline hover:text-red-500 transition-colors">
             programs
           </a>
+          <a href="/awards" className="underline hover:no-underline hover:text-red-500 transition-colors">
+            awards
+          </a>
           <a href="/interests" className="underline hover:no-underline hover:text-red-500 transition-colors">
             interests
           </a>
@@ -119,10 +122,9 @@ export default function Research() {
               <h2 className="text-lg font-semibold mb-3">
                 Evaluating AI-Generated Latin Narratives for Early Language Learners
               </h2>
-              <p className="text-gray-600 mb-2">IRB submitted</p>
               <p className="text-gray-600 mb-2">Conducted at Harvard University and The University of Texas at Austin</p>
               <p className="leading-relaxed">
-                This study investigates the use of large language models to generate and assess the teaching efficacy of Latin-adapted superhero stories for early learners. The research addresses a gap in accessible Latin pedagogy materials by leveraging LLMs to produce engaging, level-appropriate narratives based on established curricula such as the Cambridge Latin Course. Methods include prompt engineering with n-shot examples, parameter tuning aligned with Junior Classical League standards, and a mixed-methods evaluation combining in-class studies with self-reported learner outcomes. The project aims to provide data-driven insights into modern approaches to classical language instruction.
+                This IRB-submitted study uses large language models to generate Latin-adapted superhero stories for early learners, addressing gaps in accessible pedagogy materials. Methods include prompt engineering with n-shot examples aligned to Junior Classical League standards and mixed-methods evaluation with in-class studies.
               </p>
             </div>
 
@@ -132,7 +134,7 @@ export default function Research() {
               </h2>
               <p className="text-gray-600 mb-2">Conducted at Chemical Analysis & Nanochemistry Lab</p>
               <p className="leading-relaxed">
-                This study demonstrates the synthesis and characterization of carbon quantum dots produced from lemon juice and branched polyethylenimine using a simple one-pot heating method. Unlike semiconductor quantum dots containing toxic heavy metals, these carbon-based nanoparticles offer strong optical performance without environmental hazards. The particles were analyzed through UV-visible absorbance spectroscopy, fluorescence emission analysis, quantum yield measurements, and particle size distribution to evaluate their potential for practical water and air quality monitoring applications.
+                This study synthesizes carbon quantum dots from lemon juice and polyethylenimine using a one-pot heating method. Unlike semiconductor quantum dots with toxic heavy metals, these carbon-based nanoparticles offer strong optical performance for water and air quality monitoring applications.
               </p>
             </div>
           </div>

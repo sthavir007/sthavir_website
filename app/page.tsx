@@ -1,12 +1,12 @@
 "use client"
 
-import { Mail, Github, Linkedin } from "lucide-react"
+import { Mail, Github, Linkedin, X } from "lucide-react"
 import { useState, useEffect } from "react"
 
 export default function Home() {
   const [gravityActive, setGravityActive] = useState(false)
   const [currentDay, setCurrentDay] = useState("")
-  const [showSchool, setShowSchool] = useState(false)
+  const [showBio, setShowBio] = useState(false)
 
   useEffect(() => {
     // Set current day of the week
@@ -39,6 +39,9 @@ export default function Home() {
           <a href="/programs" className="underline hover:no-underline hover:text-red-500 transition-colors">
             programs
           </a>
+          <a href="/awards" className="underline hover:no-underline hover:text-red-500 transition-colors">
+            awards
+          </a>
           <a href="/interests" className="underline hover:no-underline hover:text-red-500 transition-colors">
             interests
           </a>
@@ -53,17 +56,10 @@ export default function Home() {
           >
             hi, i'm{" "}
             <span
-              className="cursor-pointer underline relative inline-block hover:text-red-500 transition-colors"
-              onClick={() => setShowSchool(!showSchool)}
+              className="cursor-pointer underline hover:text-red-500 transition-colors"
+              onClick={() => setShowBio(true)}
             >
               sthavir
-              <span
-                className={`absolute left-full ml-1 top-0 transition-all duration-500 whitespace-nowrap ${
-                  showSchool ? "opacity-100 transform translate-x-0" : "opacity-0 transform -translate-x-4"
-                }`}
-              >
-                (tjhsst '26)
-              </span>
             </span>
           </h1>
 
@@ -128,6 +124,41 @@ export default function Home() {
           ;)
         </button>
       </div>
+
+      {/* Bio Modal */}
+      {showBio && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-60 z-50 flex items-center justify-center p-4"
+          onClick={() => setShowBio(false)}
+        >
+          <div
+            className="bg-[#f0ead6] rounded-lg max-w-lg w-full p-8 relative shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setShowBio(false)}
+              className="absolute top-4 right-4 hover:text-red-500 transition-colors"
+              aria-label="Close"
+            >
+              <X size={24} />
+            </button>
+            <div className="text-base leading-relaxed">
+              <p>
+                hi! my name is sthavir vinjamuri. i'm a senior at{" "}
+                <a
+                  href="https://tjhsst.fcps.edu/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline hover:no-underline hover:text-red-500 transition-colors"
+                >
+                  thomas jefferson high school for science and technology
+                </a>
+                . i am currently interested in computational genomics, population health, latin-language education reform, and sustainability in quantum chemistry.
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
 
       <style jsx>{`
         .f1-car {

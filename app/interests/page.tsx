@@ -16,6 +16,9 @@ export default function Interests() {
           <a href="/programs" className="underline hover:no-underline hover:text-red-500 transition-colors">
             programs
           </a>
+          <a href="/awards" className="underline hover:no-underline hover:text-red-500 transition-colors">
+            awards
+          </a>
         </div>
       </header>
 
