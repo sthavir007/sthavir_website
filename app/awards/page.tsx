@@ -3,13 +3,13 @@ import Link from "next/link"
 export default function Awards() {
   return (
     <div className="min-h-screen bg-[#f0ead6] text-black font-sans">
-      <header className="p-6 flex justify-between items-center">
-        <div className="text-base">
+      <header className="p-6 flex flex-wrap justify-between items-center gap-2">
+        <div className="text-base shrink-0 mr-4">
           <Link href="/" prefetch={true} className="underline hover:no-underline hover:text-red-500 transition-colors">
             home
           </Link>
         </div>
-        <div className="text-base flex space-x-4">
+        <div className="text-base flex flex-wrap gap-x-4 gap-y-2">
           <Link href="/research" prefetch={true} className="underline hover:no-underline hover:text-red-500 transition-colors">
             research
           </Link>
