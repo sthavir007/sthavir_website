@@ -25,14 +25,14 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-[#f0ead6] text-black font-sans relative overflow-hidden">
       {/* Header */}
-      <header className="p-6 flex flex-wrap justify-between items-center gap-2">
+      <header className="p-6 flex justify-between items-center gap-4">
         <div
-          className={`text-base transition-all duration-1000 shrink-0 mr-4 ${gravityActive ? "transform translate-y-[100vh] rotate-12" : ""}`}
+          className={`text-sm md:text-base transition-all duration-1000 shrink-0 ${gravityActive ? "transform translate-y-[100vh] rotate-12" : ""}`}
         >
           <span className="cursor-default">home</span>
         </div>
         <div
-          className={`text-base flex flex-wrap gap-x-4 gap-y-2 transition-all duration-1000 ${gravityActive ? "transform translate-y-[100vh] rotate-45" : ""}`}
+          className={`text-sm md:text-base flex gap-x-3 md:gap-x-4 transition-all duration-1000 ${gravityActive ? "transform translate-y-[100vh] rotate-45" : ""}`}
         >
           <Link href="/research" prefetch={true} className="underline hover:no-underline hover:text-red-500 transition-colors">
             research
