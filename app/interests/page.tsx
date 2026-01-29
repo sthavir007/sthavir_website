@@ -135,7 +135,15 @@ export default function Interests() {
               </li>
               <li className="flex items-center">
                 <span className="mr-3">•</span>
-                cobra kai: "strike first, strike hard, no mercy"
+                <a
+                  href="https://www.youtube.com/watch?v=xCwwxNbtK6Y&pp=ygURY29icmEga2FpIHRyYWlsZXI%3D"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline hover:no-underline hover:text-red-500 transition-colors"
+                >
+                  cobra kai
+                </a>
+                : "strike first, strike hard, no mercy"
               </li>
               <li className="flex items-center">
                 <span className="mr-3">•</span>
