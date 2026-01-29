@@ -86,7 +86,10 @@
   * {
     @apply border-border;
   }
+  html, body {
+    background-color: #f0ead6 !important;
+  }
   body {
-    @apply bg-background text-foreground;
+    @apply text-foreground;
   }
 }
