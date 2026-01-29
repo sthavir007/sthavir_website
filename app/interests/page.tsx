@@ -52,17 +52,14 @@ export default function Interests() {
               </li>
               <li className="flex items-center">
                 <span className="mr-3">•</span>
-                <span>
-                  concerts should be banned @
-                  <a
-                    href="https://docs.google.com/document/d/1-fkoHSkkQf6mRMDMS4xp49RV51WZfw-3S-cBF41TXUA/edit?usp=sharing"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="underline hover:no-underline hover:text-red-500 transition-colors"
-                  >
-                    circus maximus
-                  </a>
-                </span>
+                <a
+                  href="https://docs.google.com/document/d/1-fkoHSkkQf6mRMDMS4xp49RV51WZfw-3S-cBF41TXUA/edit?usp=sharing"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline hover:no-underline hover:text-red-500 transition-colors"
+                >
+                  concerts should be banned @circus maximus
+                </a>
               </li>
               <li className="flex items-center">
                 <span className="mr-3">•</span>

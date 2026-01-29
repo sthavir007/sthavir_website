@@ -109,7 +109,7 @@ export default function Research() {
                 </button>
               </h2>
               <p className="text-gray-600 mb-2">Poster presented at 2025 ASSIP Poster Fair</p>
-              <p className="text-gray-600 mb-2">Conducted at Chemical Analysis & Nanochemistry Lab</p>
+              <p className="text-gray-600 mb-2">Conducted at the Aspiring Scientists Summer Internship Program, Mobility Observatory and Data Analytics Lab, of George Mason University</p>
               <p className="leading-relaxed">
                 This project applies a spatial mismatch framework to quantify where heat hazard exceeds cooling access
                 in New York City, integrating FEMA NRI metrics, cooling-access measures, and demographic data to
@@ -122,7 +122,7 @@ export default function Research() {
               <h2 className="text-lg font-semibold mb-3">
                 Evaluating AI-Generated Latin Narratives for Early Language Learners
               </h2>
-              <p className="text-gray-600 mb-2">Conducted at Harvard University and The University of Texas at Austin</p>
+              <p className="text-gray-600 mb-2">Conducted at the Quantitative Criticism Lab of Harvard University, The University of Texas at Austin</p>
               <p className="leading-relaxed">
                 This IRB-submitted study uses large language models to generate Latin-adapted superhero stories for early learners, addressing gaps in accessible pedagogy materials. Methods include prompt engineering with n-shot examples aligned to Junior Classical League standards and mixed-methods evaluation with in-class studies.
               </p>
@@ -132,7 +132,7 @@ export default function Research() {
               <h2 className="text-lg font-semibold mb-3">
                 The Effect of Synthesis Method and Starting Materials on the Yield and Viability of Quantum Dots
               </h2>
-              <p className="text-gray-600 mb-2">Conducted at Chemical Analysis & Nanochemistry Lab</p>
+              <p className="text-gray-600 mb-2">Conducted at TJHSST's Chemical Analysis & Nanochemistry Lab</p>
               <p className="leading-relaxed">
                 This study synthesizes carbon quantum dots from lemon juice and polyethylenimine using a one-pot heating method. Unlike semiconductor quantum dots with toxic heavy metals, these carbon-based nanoparticles offer strong optical performance for water and air quality monitoring applications.
               </p>

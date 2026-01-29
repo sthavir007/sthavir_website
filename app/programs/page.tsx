@@ -55,7 +55,7 @@ export default function Programs() {
                   </a>
                 </h2>
                 <p className="text-gray-600 text-sm">
-                  An intensive program at Harvard Medical School focused on single-cell RNA sequencing analysis. Participants process large-scale gene expression datasets using the O2 high-performance computing cluster and learn computational pipelines including Cell Ranger and Seurat for single-cell transcriptomics.
+                  An intensive program at Harvard Medical School focused on single-cell RNA sequencing analysis. I processed large-scale gene expression datasets using the O2 high-performance computing cluster and learned computational pipelines including Cell Ranger and Seurat for single-cell transcriptomics.
                 </p>
               </div>
 
@@ -71,7 +71,7 @@ export default function Programs() {
                   </a>
                 </h2>
                 <p className="text-gray-600 text-sm">
-                  An eight-week research internship at George Mason University where students work alongside faculty mentors on original projects. Research involved building spatial analysis models using ArcGIS to map urban heat vulnerability and cooling center access across New York City neighborhoods.
+                  A research internship at George Mason University where students work alongside faculty mentors on original projects. I built spatial analysis models using ArcGIS to map urban heat vulnerability and cooling center access across New York City neighborhoods.
                 </p>
               </div>
 
@@ -95,7 +95,7 @@ export default function Programs() {
                   </a>
                 </h2>
                 <p className="text-gray-600 text-sm">
-                  A one-week program hosted by the 1517 Fund for twice-exceptional students interested in entrepreneurship and unconventional education. Activities included visiting early-stage startups, attending workshops on practical skills such as lockpicking and sword-fighting, and participating in discussions on alternative paths to building companies.
+                  A program hosted by the 1517 Fund for teens interested in entrepreneurship and unconventional education. Activities included visiting early-stage startups, attending workshops on practical skills such as lockpicking and sword-fighting, and participating in discussions on alternative paths to building companies.
                 </p>
               </div>
           </div>

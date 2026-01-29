@@ -78,7 +78,7 @@ export default function Home() {
       <footer
         className={`fixed bottom-6 left-0 right-0 text-center text-xs text-gray-600 transition-all duration-1000 ${gravityActive ? "transform translate-y-[100vh] rotate-12" : ""}`}
       >
-        Sthavir Vinjamuri | sthavir007@gmail.com | have a great {currentDay}!
+        Sthavir Vinjamuri | have a great {currentDay}!
       </footer>
 
       {/* Social Icons */}
