@@ -4,12 +4,12 @@ export default function Awards() {
   return (
     <div className="min-h-screen bg-[#f0ead6] text-black font-sans">
       <header className="p-6 flex justify-between items-center">
-        <div className="text-sm">
+        <div className="text-base">
           <a href="/" className="underline hover:no-underline hover:text-red-500 transition-colors">
             home
           </a>
         </div>
-        <div className="text-sm flex space-x-4">
+        <div className="text-base flex space-x-4">
           <a href="/research" className="underline hover:no-underline hover:text-red-500 transition-colors">
             research
           </a>
@@ -24,9 +24,9 @@ export default function Awards() {
 
       <main className="px-6 py-12">
         <div className="max-w-2xl mx-auto">
-          <h1 className="text-2xl mb-8 text-center">awards</h1>
+          <h1 className="text-3xl mb-8 text-center">awards</h1>
 
-          <div className="text-base leading-relaxed space-y-6">
+          <div className="text-lg leading-relaxed space-y-6">
             {/* Science Olympiads */}
             <div className="border-b border-gray-300 pb-4">
               <h2 className="font-semibold mb-2">Science</h2>

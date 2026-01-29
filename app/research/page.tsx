@@ -14,12 +14,12 @@ export default function Research() {
   return (
     <div className="min-h-screen bg-[#f0ead6] text-black font-sans">
       <header className="p-6 flex justify-between items-center">
-        <div className="text-sm">
+        <div className="text-base">
           <a href="/" className="underline hover:no-underline hover:text-red-500 transition-colors">
             home
           </a>
         </div>
-        <div className="text-sm flex space-x-4">
+        <div className="text-base flex space-x-4">
           <a href="/programs" className="underline hover:no-underline hover:text-red-500 transition-colors">
             programs
           </a>
@@ -34,9 +34,9 @@ export default function Research() {
 
       <main className="px-6 py-12">
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-2xl mb-8 text-center">research</h1>
+          <h1 className="text-3xl mb-8 text-center">research</h1>
 
-          <div className="text-sm leading-relaxed space-y-8">
+          <div className="text-base leading-relaxed space-y-8">
             <div className="border-b border-gray-300 pb-6">
               <h2 className="text-lg font-semibold mb-3">
                 <a

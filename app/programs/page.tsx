@@ -4,12 +4,12 @@ export default function Programs() {
   return (
     <div className="min-h-screen bg-[#f0ead6] text-black font-sans">
       <header className="p-6 flex justify-between items-center">
-        <div className="text-sm">
+        <div className="text-base">
           <a href="/" className="underline hover:no-underline hover:text-red-500 transition-colors">
             home
           </a>
         </div>
-        <div className="text-sm flex space-x-4">
+        <div className="text-base flex space-x-4">
           <a href="/research" className="underline hover:no-underline hover:text-red-500 transition-colors">
             research
           </a>
@@ -24,9 +24,9 @@ export default function Programs() {
 
       <main className="px-6 py-12">
         <div className="max-w-2xl mx-auto">
-          <h1 className="text-2xl mb-8 text-center">programs</h1>
+          <h1 className="text-3xl mb-8 text-center">programs</h1>
 
-          <div className="text-base leading-relaxed space-y-6">
+          <div className="text-lg leading-relaxed space-y-6">
               <div className="border-b border-gray-300 pb-4">
                 <h2 className="font-semibold mb-1">
                   <a
@@ -38,7 +38,7 @@ export default function Programs() {
                     Baranov Lab: Single-cell Bioinformatics Summer School
                   </a>
                 </h2>
-                <p className="text-gray-600 text-sm">
+                <p className="text-gray-600 text-base">
                   An intensive program at Harvard Medical School focused on single-cell RNA sequencing analysis. I processed large-scale gene expression datasets using the O2 high-performance computing cluster and learned computational pipelines including Cell Ranger and Seurat for single-cell transcriptomics.
                 </p>
               </div>
@@ -54,7 +54,7 @@ export default function Programs() {
                     Aspiring Scientists Summer Internship Program
                   </a>
                 </h2>
-                <p className="text-gray-600 text-sm">
+                <p className="text-gray-600 text-base">
                   A research internship at George Mason University where students work alongside faculty mentors on original projects. I built spatial analysis models using ArcGIS to map urban heat vulnerability and cooling center access across New York City neighborhoods.
                 </p>
               </div>
@@ -70,7 +70,7 @@ export default function Programs() {
                     Quantitative Criticism Lab
                   </a>
                 </h2>
-                <p className="text-gray-600 text-sm">
+                <p className="text-gray-600 text-base">
                   A research group at The University of Texas at Austin that develops computational methods for analyzing classical Latin and Greek texts. The lab applies natural language processing and machine learning to study stylistic patterns, authorship attribution, and linguistic evolution across ancient literature.
                 </p>
               </div>
@@ -94,7 +94,7 @@ export default function Programs() {
                     2e Camp
                   </a>
                 </h2>
-                <p className="text-gray-600 text-sm">
+                <p className="text-gray-600 text-base">
                   A program hosted by the 1517 Fund for teens interested in entrepreneurship and unconventional education. Activities included visiting early-stage startups, attending workshops on practical skills such as lockpicking and sword-fighting, and participating in discussions on alternative paths to building companies.
                 </p>
               </div>

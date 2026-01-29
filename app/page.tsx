@@ -26,12 +26,12 @@ export default function Home() {
       {/* Header */}
       <header className="p-6 flex justify-between items-center">
         <div
-          className={`text-sm transition-all duration-1000 ${gravityActive ? "transform translate-y-[100vh] rotate-12" : ""}`}
+          className={`text-base transition-all duration-1000 ${gravityActive ? "transform translate-y-[100vh] rotate-12" : ""}`}
         >
           <span className="cursor-default">home</span>
         </div>
         <div
-          className={`text-sm flex space-x-4 transition-all duration-1000 ${gravityActive ? "transform translate-y-[100vh] rotate-45" : ""}`}
+          className={`text-base flex space-x-4 transition-all duration-1000 ${gravityActive ? "transform translate-y-[100vh] rotate-45" : ""}`}
         >
           <a href="/research" className="underline hover:no-underline hover:text-red-500 transition-colors">
             research
@@ -52,13 +52,13 @@ export default function Home() {
       <main className="flex items-center justify-center min-h-[80vh] px-6">
         <div className="text-center">
           <h1
-            className={`text-2xl mb-2 transition-all duration-1000 ${gravityActive ? "transform translate-y-[100vh] rotate-90" : ""}`}
+            className={`text-3xl mb-2 transition-all duration-1000 ${gravityActive ? "transform translate-y-[100vh] rotate-90" : ""}`}
           >
             hi, i'm sthavir
           </h1>
           <button
             onClick={() => setShowBio(true)}
-            className={`text-sm underline hover:no-underline hover:text-red-500 transition-colors mb-4 ${gravityActive ? "transform translate-y-[100vh] rotate-90" : ""}`}
+            className={`text-base underline hover:no-underline hover:text-red-500 transition-colors mb-4 ${gravityActive ? "transform translate-y-[100vh] rotate-90" : ""}`}
           >
             intro
           </button>
@@ -76,7 +76,7 @@ export default function Home() {
 
       {/* Footer */}
       <footer
-        className={`fixed bottom-6 left-0 right-0 text-center text-xs text-gray-600 transition-all duration-1000 ${gravityActive ? "transform translate-y-[100vh] rotate-12" : ""}`}
+        className={`fixed bottom-6 left-0 right-0 text-center text-sm text-gray-600 transition-all duration-1000 ${gravityActive ? "transform translate-y-[100vh] rotate-12" : ""}`}
       >
         Sthavir Vinjamuri | have a great {currentDay}!
       </footer>
@@ -142,7 +142,7 @@ export default function Home() {
             >
               <X size={24} />
             </button>
-            <div className="text-base leading-relaxed">
+            <div className="text-lg leading-relaxed">
               <p>
                 welcome to my website! i'm a senior at{" "}
                 <a
