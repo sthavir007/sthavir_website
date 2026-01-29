@@ -163,24 +163,26 @@ export default function Home() {
 
       <style jsx>{`
         .f1-car {
-          animation: raceAcrossReverse 10s ease-in-out infinite;
+          animation: raceAcrossReverse 4s ease-in-out infinite;
           animation-iteration-count: infinite;
           animation-delay: 0s;
           right: -50px;
         }
 
         @keyframes raceAcrossReverse {
-          0%,
-          66.67% {
+          0% {
             right: -50px;
             opacity: 0;
           }
-          70% {
+          5% {
+            opacity: 1;
+          }
+          95% {
             opacity: 1;
           }
           100% {
             right: calc(100% + 50px);
-            opacity: 1;
+            opacity: 0;
           }
         }
       `}</style>
