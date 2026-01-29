@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { X } from "lucide-react"
+import Link from "next/link"
 
 export default function Research() {
   const [activePoster, setActivePoster] = useState<string | null>(null)
@@ -14,23 +15,29 @@ export default function Research() {
   return (
     <div className="min-h-screen bg-[#f0ead6] text-black font-sans">
       <header className="p-6 flex justify-between items-center">
-        <div className="text-sm">
-          <a href="/" className="hover:text-red-500 transition-colors">
+        <div className="text-base">
+          <Link href="/" prefetch={true} className="underline hover:no-underline hover:text-red-500 transition-colors">
             home
-          </a>
+          </Link>
         </div>
-        <div className="text-sm">
-          <a href="/interests" className="hover:text-red-500 transition-colors">
+        <div className="text-base flex space-x-4">
+          <Link href="/programs" prefetch={true} className="underline hover:no-underline hover:text-red-500 transition-colors">
+            programs
+          </Link>
+          <Link href="/awards" prefetch={true} className="underline hover:no-underline hover:text-red-500 transition-colors">
+            awards
+          </Link>
+          <Link href="/interests" prefetch={true} className="underline hover:no-underline hover:text-red-500 transition-colors">
             interests
-          </a>
+          </Link>
         </div>
       </header>
 
       <main className="px-6 py-12">
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-2xl mb-8 text-center">research</h1>
+          <h1 className="text-3xl mb-8 text-center">research</h1>
 
-          <div className="text-sm leading-relaxed space-y-8">
+          <div className="text-base leading-relaxed space-y-8">
             <div className="border-b border-gray-300 pb-6">
               <h2 className="text-lg font-semibold mb-3">
                 <a
@@ -103,11 +110,32 @@ export default function Research() {
                 </button>
               </h2>
               <p className="text-gray-600 mb-2">Poster presented at 2025 ASSIP Poster Fair</p>
+              <p className="text-gray-600 mb-2">Conducted at the Aspiring Scientists Summer Internship Program, Mobility Observatory and Data Analytics Lab, of George Mason University</p>
               <p className="leading-relaxed">
                 This project applies a spatial mismatch framework to quantify where heat hazard exceeds cooling access
                 in New York City, integrating FEMA NRI metrics, cooling-access measures, and demographic data to
                 identify high-risk, low-access clusters and produce actionable targets for equitable cooling center
                 placement.
+              </p>
+            </div>
+
+            <div className="border-b border-gray-300 pb-6">
+              <h2 className="text-lg font-semibold mb-3">
+                Evaluating AI-Generated Latin Narratives for Early Language Learners
+              </h2>
+              <p className="text-gray-600 mb-2">Conducted at the Quantitative Criticism Lab of Harvard University, The University of Texas at Austin</p>
+              <p className="leading-relaxed">
+                This IRB-submitted study uses large language models to generate Latin-adapted superhero stories for early learners, addressing gaps in accessible pedagogy materials. Methods include prompt engineering with n-shot examples aligned to Junior Classical League standards and mixed-methods evaluation with in-class studies.
+              </p>
+            </div>
+
+            <div className="border-b border-gray-300 pb-6">
+              <h2 className="text-lg font-semibold mb-3">
+                The Effect of Synthesis Method and Starting Materials on the Yield and Viability of Quantum Dots
+              </h2>
+              <p className="text-gray-600 mb-2">Conducted at TJHSST's Chemical Analysis & Nanochemistry Lab</p>
+              <p className="leading-relaxed">
+                This study synthesizes carbon quantum dots from lemon juice and polyethylenimine using a one-pot heating method. Unlike semiconductor quantum dots with toxic heavy metals, these carbon-based nanoparticles offer strong optical performance for water and air quality monitoring applications.
               </p>
             </div>
           </div>
