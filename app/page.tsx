@@ -40,9 +40,6 @@ export default function Home() {
           <Link href="/programs" prefetch={true} className="underline hover:no-underline hover:text-red-500 transition-colors">
             programs
           </Link>
-          <Link href="/awards" prefetch={true} className="underline hover:no-underline hover:text-red-500 transition-colors">
-            awards
-          </Link>
           <Link href="/interests" prefetch={true} className="underline hover:no-underline hover:text-red-500 transition-colors">
             interests
           </Link>
@@ -163,7 +160,7 @@ export default function Home() {
 
       <style jsx>{`
         .f1-car {
-          animation: raceAcrossReverse 4s ease-in-out infinite;
+          animation: raceAcrossReverse 12s ease-in-out infinite;
           animation-iteration-count: infinite;
           animation-delay: 0s;
           right: -50px;
