@@ -65,9 +65,9 @@ export default function Home() {
           </button>
 
           {/* F1 Car Animation */}
-          <div className="relative h-12 mb-8 overflow-hidden">
+          <div className="relative h-16 mb-8 overflow-hidden">
             <div
-              className={`f1-car absolute top-1/2 transform -translate-y-1/2 text-2xl transition-all duration-1000 ${gravityActive ? "translate-y-[100vh] rotate-180" : ""}`}
+              className={`f1-car absolute top-1/2 transform -translate-y-1/2 text-4xl transition-all duration-1000 ${gravityActive ? "translate-y-[100vh] rotate-180" : ""}`}
             >
               🏎️
             </div>
