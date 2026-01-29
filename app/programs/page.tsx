@@ -30,22 +30,6 @@ export default function Programs() {
               <div className="border-b border-gray-300 pb-4">
                 <h2 className="font-semibold mb-1">
                   <a
-                    href="https://www.qcrit.org/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="underline hover:no-underline hover:text-red-500 transition-colors"
-                  >
-                    Quantitative Criticism Lab
-                  </a>
-                </h2>
-                <p className="text-gray-600 text-sm">
-                  A research group at The University of Texas at Austin that develops computational methods for analyzing classical Latin and Greek texts. The lab applies natural language processing and machine learning to study stylistic patterns, authorship attribution, and linguistic evolution across ancient literature.
-                </p>
-              </div>
-
-              <div className="border-b border-gray-300 pb-4">
-                <h2 className="font-semibold mb-1">
-                  <a
                     href="https://bnv-lab.org/summer"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -72,6 +56,22 @@ export default function Programs() {
                 </h2>
                 <p className="text-gray-600 text-sm">
                   A research internship at George Mason University where students work alongside faculty mentors on original projects. I built spatial analysis models using ArcGIS to map urban heat vulnerability and cooling center access across New York City neighborhoods.
+                </p>
+              </div>
+
+              <div className="border-b border-gray-300 pb-4">
+                <h2 className="font-semibold mb-1">
+                  <a
+                    href="https://www.qcrit.org/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline hover:no-underline hover:text-red-500 transition-colors"
+                  >
+                    Quantitative Criticism Lab
+                  </a>
+                </h2>
+                <p className="text-gray-600 text-sm">
+                  A research group at The University of Texas at Austin that develops computational methods for analyzing classical Latin and Greek texts. The lab applies natural language processing and machine learning to study stylistic patterns, authorship attribution, and linguistic evolution across ancient literature.
                 </p>
               </div>
 
