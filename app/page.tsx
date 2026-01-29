@@ -52,16 +52,16 @@ export default function Home() {
       <main className="flex items-center justify-center min-h-[80vh] px-6">
         <div className="text-center">
           <h1
-            className={`text-2xl mb-4 transition-all duration-1000 ${gravityActive ? "transform translate-y-[100vh] rotate-90" : ""}`}
+            className={`text-2xl mb-2 transition-all duration-1000 ${gravityActive ? "transform translate-y-[100vh] rotate-90" : ""}`}
           >
-            hi, i'm{" "}
-            <span
-              className="cursor-pointer underline hover:text-red-500 transition-colors"
-              onClick={() => setShowBio(true)}
-            >
-              sthavir
-            </span>
+            hi, i'm sthavir
           </h1>
+          <button
+            onClick={() => setShowBio(true)}
+            className={`text-sm underline hover:no-underline hover:text-red-500 transition-colors mb-4 ${gravityActive ? "transform translate-y-[100vh] rotate-90" : ""}`}
+          >
+            intro
+          </button>
 
           {/* F1 Car Animation */}
           <div className="relative h-12 mb-8 overflow-hidden">
