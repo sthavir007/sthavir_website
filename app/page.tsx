@@ -2,6 +2,7 @@
 
 import { Mail, Github, Linkedin, X } from "lucide-react"
 import { useState, useEffect } from "react"
+import Link from "next/link"
 
 export default function Home() {
   const [gravityActive, setGravityActive] = useState(false)
@@ -33,18 +34,18 @@ export default function Home() {
         <div
           className={`text-base flex space-x-4 transition-all duration-1000 ${gravityActive ? "transform translate-y-[100vh] rotate-45" : ""}`}
         >
-          <a href="/research" className="underline hover:no-underline hover:text-red-500 transition-colors">
+          <Link href="/research" prefetch={true} className="underline hover:no-underline hover:text-red-500 transition-colors">
             research
-          </a>
-          <a href="/programs" className="underline hover:no-underline hover:text-red-500 transition-colors">
+          </Link>
+          <Link href="/programs" prefetch={true} className="underline hover:no-underline hover:text-red-500 transition-colors">
             programs
-          </a>
-          <a href="/awards" className="underline hover:no-underline hover:text-red-500 transition-colors">
+          </Link>
+          <Link href="/awards" prefetch={true} className="underline hover:no-underline hover:text-red-500 transition-colors">
             awards
-          </a>
-          <a href="/interests" className="underline hover:no-underline hover:text-red-500 transition-colors">
+          </Link>
+          <Link href="/interests" prefetch={true} className="underline hover:no-underline hover:text-red-500 transition-colors">
             interests
-          </a>
+          </Link>
         </div>
       </header>
 
@@ -86,11 +87,11 @@ export default function Home() {
         <div
           className={`flex flex-col space-y-4 transition-all duration-1000 ${gravityActive ? "transform translate-y-[100vh] rotate-45" : ""}`}
         >
-          <a href="/email" className="hover:text-red-500 transition-colors" aria-label="Email">
+          <Link href="/email" prefetch={true} className="hover:text-red-500 transition-colors" aria-label="Email">
             <div className="w-10 h-10 flex items-center justify-center">
               <Mail size={24} />
             </div>
-          </a>
+          </Link>
           <a
             href="https://github.com/sthavir007"
             target="_blank"

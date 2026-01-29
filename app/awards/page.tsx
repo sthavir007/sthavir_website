@@ -1,24 +1,24 @@
-"use client"
+import Link from "next/link"
 
 export default function Awards() {
   return (
     <div className="min-h-screen bg-[#f0ead6] text-black font-sans">
       <header className="p-6 flex justify-between items-center">
         <div className="text-base">
-          <a href="/" className="underline hover:no-underline hover:text-red-500 transition-colors">
+          <Link href="/" prefetch={true} className="underline hover:no-underline hover:text-red-500 transition-colors">
             home
-          </a>
+          </Link>
         </div>
         <div className="text-base flex space-x-4">
-          <a href="/research" className="underline hover:no-underline hover:text-red-500 transition-colors">
+          <Link href="/research" prefetch={true} className="underline hover:no-underline hover:text-red-500 transition-colors">
             research
-          </a>
-          <a href="/programs" className="underline hover:no-underline hover:text-red-500 transition-colors">
+          </Link>
+          <Link href="/programs" prefetch={true} className="underline hover:no-underline hover:text-red-500 transition-colors">
             programs
-          </a>
-          <a href="/interests" className="underline hover:no-underline hover:text-red-500 transition-colors">
+          </Link>
+          <Link href="/interests" prefetch={true} className="underline hover:no-underline hover:text-red-500 transition-colors">
             interests
-          </a>
+          </Link>
         </div>
       </header>
 

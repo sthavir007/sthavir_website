@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { X } from "lucide-react"
+import Link from "next/link"
 
 export default function Research() {
   const [activePoster, setActivePoster] = useState<string | null>(null)
@@ -15,20 +16,20 @@ export default function Research() {
     <div className="min-h-screen bg-[#f0ead6] text-black font-sans">
       <header className="p-6 flex justify-between items-center">
         <div className="text-base">
-          <a href="/" className="underline hover:no-underline hover:text-red-500 transition-colors">
+          <Link href="/" prefetch={true} className="underline hover:no-underline hover:text-red-500 transition-colors">
             home
-          </a>
+          </Link>
         </div>
         <div className="text-base flex space-x-4">
-          <a href="/programs" className="underline hover:no-underline hover:text-red-500 transition-colors">
+          <Link href="/programs" prefetch={true} className="underline hover:no-underline hover:text-red-500 transition-colors">
             programs
-          </a>
-          <a href="/awards" className="underline hover:no-underline hover:text-red-500 transition-colors">
+          </Link>
+          <Link href="/awards" prefetch={true} className="underline hover:no-underline hover:text-red-500 transition-colors">
             awards
-          </a>
-          <a href="/interests" className="underline hover:no-underline hover:text-red-500 transition-colors">
+          </Link>
+          <Link href="/interests" prefetch={true} className="underline hover:no-underline hover:text-red-500 transition-colors">
             interests
-          </a>
+          </Link>
         </div>
       </header>
 
