@@ -3,13 +3,13 @@ import Link from "next/link"
 export default function Interests() {
   return (
     <div className="min-h-screen bg-[#f0ead6] text-black font-sans">
-      <header className="p-6 flex justify-between items-center">
-        <div className="text-base">
+      <header className="p-6 flex justify-between items-center gap-4">
+        <div className="text-sm md:text-base shrink-0">
           <Link href="/" prefetch={true} className="underline hover:no-underline hover:text-red-500 transition-colors">
             home
           </Link>
         </div>
-        <div className="text-base flex space-x-4">
+        <div className="text-sm md:text-base flex gap-x-3 md:gap-x-4">
           <Link href="/research" prefetch={true} className="underline hover:no-underline hover:text-red-500 transition-colors">
             research
           </Link>
@@ -133,29 +133,33 @@ export default function Interests() {
                   gordon murray t.50
                 </a>
               </li>
-              <li className="flex items-center">
+              <li className="flex items-start">
                 <span className="mr-3">•</span>
-                <a
-                  href="https://www.youtube.com/watch?v=xCwwxNbtK6Y&pp=ygURY29icmEga2FpIHRyYWlsZXI%3D"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="underline hover:no-underline hover:text-red-500 transition-colors"
-                >
-                  cobra kai
-                </a>
-                : "strike first, strike hard, no mercy"
+                <span>
+                  <a
+                    href="https://www.youtube.com/watch?v=xCwwxNbtK6Y&pp=ygURY29icmEga2FpIHRyYWlsZXI%3D"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline hover:no-underline hover:text-red-500 transition-colors"
+                  >
+                    cobra kai
+                  </a>
+                  : "strike first, strike hard, no mercy"
+                </span>
               </li>
-              <li className="flex items-center">
-                <span className="mr-3">•</span>
-                black dal and jackfruit biryani @{" "}
-                <a
-                  href="https://www.dishoom.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="underline hover:no-underline hover:text-red-500 transition-colors"
-                >
-                  dishoom
-                </a>
+              <li className="flex items-start">
+                <span className="mr-3 shrink-0">•</span>
+                <span>
+                  black dal and jackfruit biryani @{" "}
+                  <a
+                    href="https://www.dishoom.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline hover:no-underline hover:text-red-500 transition-colors"
+                  >
+                    dishoom
+                  </a>
+                </span>
               </li>
               <li className="flex items-center">
                 <span className="mr-3">•</span>

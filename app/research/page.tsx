@@ -14,13 +14,13 @@ export default function Research() {
 
   return (
     <div className="min-h-screen bg-[#f0ead6] text-black font-sans">
-      <header className="p-6 flex justify-between items-center">
-        <div className="text-base">
+      <header className="p-6 flex justify-between items-center gap-4">
+        <div className="text-sm md:text-base shrink-0">
           <Link href="/" prefetch={true} className="underline hover:no-underline hover:text-red-500 transition-colors">
             home
           </Link>
         </div>
-        <div className="text-base flex space-x-4">
+        <div className="text-sm md:text-base flex gap-x-3 md:gap-x-4">
           <Link href="/programs" prefetch={true} className="underline hover:no-underline hover:text-red-500 transition-colors">
             programs
           </Link>
