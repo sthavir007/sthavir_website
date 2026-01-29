@@ -63,6 +63,17 @@ export default function Interests() {
               </li>
               <li className="flex items-center">
                 <span className="mr-3">•</span>
+                <a
+                  href="https://www.youtube.com/watch?v=XjZ3N05lMo0&list=LL&index=1"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline hover:no-underline hover:text-red-500 transition-colors"
+                >
+                  schrodinger time evolution
+                </a>
+              </li>
+              <li className="flex items-center">
+                <span className="mr-3">•</span>
                 <span>
                   <a
                     href="https://www.amazon.com/Riftwar-Saga-Raymond-Feist/dp/0553333240?sr=8-1"

@@ -15,7 +15,7 @@ export default function Research() {
     <div className="min-h-screen bg-[#f0ead6] text-black font-sans">
       <header className="p-6 flex justify-between items-center">
         <div className="text-sm">
-          <a href="/" className="hover:text-red-500 transition-colors">
+          <a href="/" className="underline hover:no-underline hover:text-red-500 transition-colors">
             home
           </a>
         </div>
