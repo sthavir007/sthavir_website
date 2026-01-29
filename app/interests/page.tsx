@@ -157,7 +157,7 @@ export default function Interests() {
                   rel="noopener noreferrer"
                   className="underline hover:no-underline hover:text-red-500 transition-colors"
                 >
-                  The Tribune: Bernardo Buontalenti
+                  the tribune: bernardo buontalenti
                 </a>
               </li>
               <li className="flex items-center">
@@ -168,7 +168,7 @@ export default function Interests() {
                   rel="noopener noreferrer"
                   className="underline hover:no-underline hover:text-red-500 transition-colors"
                 >
-                  My Octopus Teacher
+                  my octopus teacher
                 </a>
               </li>
               <li className="flex items-center">
@@ -179,7 +179,7 @@ export default function Interests() {
                   rel="noopener noreferrer"
                   className="underline hover:no-underline hover:text-red-500 transition-colors"
                 >
-                  Farzi
+                  farzi
                 </a>
               </li>
               <li className="flex items-center">
@@ -190,7 +190,7 @@ export default function Interests() {
                   rel="noopener noreferrer"
                   className="underline hover:no-underline hover:text-red-500 transition-colors"
                 >
-                  WVFRM Podcast
+                  wvfrm podcast
                 </a>
               </li>
             </ul>
