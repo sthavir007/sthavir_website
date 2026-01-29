@@ -16,9 +16,6 @@ export default function Interests() {
           <Link href="/programs" prefetch={true} className="underline hover:no-underline hover:text-red-500 transition-colors">
             programs
           </Link>
-          <Link href="/awards" prefetch={true} className="underline hover:no-underline hover:text-red-500 transition-colors">
-            awards
-          </Link>
         </div>
       </header>
 

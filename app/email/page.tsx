@@ -16,9 +16,6 @@ export default function Email() {
           <Link href="/programs" prefetch={true} className="underline hover:no-underline hover:text-red-500 transition-colors">
             programs
           </Link>
-          <Link href="/awards" prefetch={true} className="underline hover:no-underline hover:text-red-500 transition-colors">
-            awards
-          </Link>
           <Link href="/interests" prefetch={true} className="underline hover:no-underline hover:text-red-500 transition-colors">
             interests
           </Link>
