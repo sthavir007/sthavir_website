@@ -3,6 +3,7 @@
 import { Mail, Github, Linkedin, X } from "lucide-react"
 import { useState, useEffect } from "react"
 import Link from "next/link"
+import Image from "next/image"
 
 export default function Home() {
   const [gravityActive, setGravityActive] = useState(false)
@@ -135,11 +136,21 @@ export default function Home() {
           >
             <button
               onClick={() => setShowBio(false)}
-              className="absolute top-4 right-4 hover:text-red-500 transition-colors"
+              className="absolute top-4 right-4 z-10 hover:text-red-500 transition-colors"
               aria-label="Close"
             >
               <X size={24} />
             </button>
+            <div className="relative w-full h-64 sm:h-72 mb-6 rounded-md overflow-hidden">
+              <Image
+                src="/images/sthavir.jpg"
+                alt="Sthavir Vinjamuri"
+                fill
+                className="object-cover object-[center_20%]"
+                sizes="(max-width: 640px) 100vw, 512px"
+                priority
+              />
+            </div>
             <div className="text-lg leading-relaxed">
               <p>
                 welcome to my website! i'm a senior at{" "}
