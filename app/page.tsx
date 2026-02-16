@@ -131,7 +131,7 @@ export default function Home() {
           onClick={() => setShowBio(false)}
         >
           <div
-            className="bg-[#f0ead6] rounded-lg max-w-lg w-full p-8 relative shadow-2xl"
+            className="bg-[#f0ead6] rounded-lg max-w-3xl w-full relative shadow-2xl overflow-hidden flex flex-col md:flex-row"
             onClick={(e) => e.stopPropagation()}
           >
             <button
@@ -141,29 +141,35 @@ export default function Home() {
             >
               <X size={24} />
             </button>
-            <div className="relative w-full h-64 sm:h-72 mb-6 rounded-md overflow-hidden">
-              <Image
-                src="/images/sthavir.jpg"
-                alt="Sthavir Vinjamuri"
-                fill
-                className="object-cover object-[center_20%]"
-                sizes="(max-width: 640px) 100vw, 512px"
-                priority
-              />
+            {/* Photo - left side */}
+            <div className="relative w-full md:w-1/2 shrink-0">
+              <div className="relative w-full h-72 md:h-full min-h-[400px]">
+                <Image
+                  src="/images/sthavir.jpg"
+                  alt="Sthavir Vinjamuri"
+                  fill
+                  className="object-cover object-top"
+                  sizes="(max-width: 768px) 100vw, 384px"
+                  priority
+                />
+              </div>
             </div>
-            <div className="text-lg leading-relaxed">
-              <p>
-                welcome to my website! i'm a senior at{" "}
-                <a
-                  href="https://tjhsst.fcps.edu/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="underline hover:no-underline hover:text-red-500 transition-colors"
-                >
-                  thomas jefferson high school for science and technology
-                </a>
-                , currently interested in computational genomics, population health, latin-language education reform, and sustainability in quantum chemistry.
-              </p>
+            {/* Text - right side */}
+            <div className="p-8 flex items-center md:w-1/2">
+              <div className="text-lg leading-relaxed">
+                <p>
+                  welcome to my website! i'm a senior at{" "}
+                  <a
+                    href="https://tjhsst.fcps.edu/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline hover:no-underline hover:text-red-500 transition-colors"
+                  >
+                    thomas jefferson high school for science and technology
+                  </a>
+                  , currently interested in computational genomics, population health, latin-language education reform, and sustainability in quantum chemistry.
+                </p>
+              </div>
             </div>
           </div>
         </div>
