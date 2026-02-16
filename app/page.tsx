@@ -144,11 +144,13 @@ export default function Home() {
             {/* Photo - left side */}
             <div className="relative w-full md:w-1/2 shrink-0">
               <div className="relative w-full h-72 md:h-full min-h-[400px]">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src="/images/sthavir.jpg"
+                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/IMG_7655.JPG-LlsRPBDbWwPsOJ8Z48WR8dgQ88gmIE.jpeg"
                   alt="Sthavir Vinjamuri"
                   loading="eager"
                   decoding="sync"
+                  fetchPriority="high"
                   className="absolute inset-0 w-full h-full object-cover object-top"
                 />
               </div>
