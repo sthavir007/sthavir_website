@@ -3,7 +3,7 @@
 import { Mail, Github, Linkedin, X } from "lucide-react"
 import { useState, useEffect } from "react"
 import Link from "next/link"
-import Image from "next/image"
+
 
 export default function Home() {
   const [gravityActive, setGravityActive] = useState(false)
@@ -144,13 +144,12 @@ export default function Home() {
             {/* Photo - left side */}
             <div className="relative w-full md:w-1/2 shrink-0">
               <div className="relative w-full h-72 md:h-full min-h-[400px]">
-                <Image
+                <img
                   src="/images/sthavir.jpg"
                   alt="Sthavir Vinjamuri"
-                  fill
-                  className="object-cover object-top"
-                  sizes="(max-width: 768px) 100vw, 384px"
-                  priority
+                  loading="eager"
+                  decoding="sync"
+                  className="absolute inset-0 w-full h-full object-cover object-top"
                 />
               </div>
             </div>
