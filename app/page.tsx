@@ -3,6 +3,7 @@
 import { Mail, Github, Linkedin, X } from "lucide-react"
 import { useState, useEffect } from "react"
 import Link from "next/link"
+import Image from "next/image"
 
 export default function Home() {
   const [gravityActive, setGravityActive] = useState(false)
@@ -130,29 +131,45 @@ export default function Home() {
           onClick={() => setShowBio(false)}
         >
           <div
-            className="bg-[#f0ead6] rounded-lg max-w-lg w-full p-8 relative shadow-2xl"
+            className="bg-[#f0ead6] rounded-lg max-w-3xl w-full relative shadow-2xl overflow-hidden flex flex-col md:flex-row"
             onClick={(e) => e.stopPropagation()}
           >
             <button
               onClick={() => setShowBio(false)}
-              className="absolute top-4 right-4 hover:text-red-500 transition-colors"
+              className="absolute top-4 right-4 z-10 hover:text-red-500 transition-colors"
               aria-label="Close"
             >
               <X size={24} />
             </button>
-            <div className="text-lg leading-relaxed">
-              <p>
-                welcome to my website! i'm a senior at{" "}
-                <a
-                  href="https://tjhsst.fcps.edu/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="underline hover:no-underline hover:text-red-500 transition-colors"
-                >
-                  thomas jefferson high school for science and technology
-                </a>
-                , currently interested in computational genomics, population health, latin-language education reform, and sustainability in quantum chemistry.
-              </p>
+            {/* Photo - left side */}
+            <div className="relative w-full md:w-1/2 shrink-0">
+              <div className="relative w-full h-72 md:h-full min-h-[400px]">
+                <Image
+                  src="/images/sthavir.jpg"
+                  alt="Sthavir Vinjamuri"
+                  fill
+                  className="object-cover object-top"
+                  sizes="(max-width: 768px) 100vw, 384px"
+                  priority
+                />
+              </div>
+            </div>
+            {/* Text - right side */}
+            <div className="p-8 flex items-center md:w-1/2">
+              <div className="text-lg leading-relaxed">
+                <p>
+                  welcome to my website! i'm a senior at{" "}
+                  <a
+                    href="https://tjhsst.fcps.edu/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline hover:no-underline hover:text-red-500 transition-colors"
+                  >
+                    thomas jefferson high school for science and technology
+                  </a>
+                  , currently interested in computational genomics, population health, latin-language education reform, and sustainability in quantum chemistry.
+                </p>
+              </div>
             </div>
           </div>
         </div>
