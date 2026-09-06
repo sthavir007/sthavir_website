@@ -1,11 +1,17 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Inter } from "next/font/google"
+import { Inter, Instrument_Serif } from "next/font/google"
 import "./globals.css"
 
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
+})
+
+const instrumentSerif = Instrument_Serif({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-instrument-serif",
 })
 
 export const metadata: Metadata = {
@@ -21,7 +27,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="bg-[#f0ead6]">
-      <body className={`${inter.variable} font-sans bg-[#f0ead6]`}>{children}</body>
+      <body className={`${inter.variable} ${instrumentSerif.variable} font-sans bg-[#f0ead6]`}>{children}</body>
     </html>
   )
 }
