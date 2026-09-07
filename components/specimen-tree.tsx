@@ -145,11 +145,20 @@ export default function SpecimenTree({ visible }: { visible: boolean }) {
     let birds: Bird[] = []
     let nextBird = 0
     let built = false
+    let lastW = 0
+    let lastH = 0
 
     const rebuild = () => {
-      width = canvas.clientWidth
-      height = canvas.clientHeight
-      if (width < 2 || height < 2) return
+      const w = canvas.clientWidth
+      const h = canvas.clientHeight
+      if (w < 2 || h < 2) return
+      // ResizeObserver fires once as soon as it observes, which would otherwise
+      // count as a "resize" and skip the growth animation on load
+      if (w === lastW && h === lastH) return
+      lastW = w
+      lastH = h
+      width = w
+      height = h
       const dpr = Math.min(window.devicePixelRatio || 1, 2)
       canvas.width = Math.floor(width * dpr)
       canvas.height = Math.floor(height * dpr)

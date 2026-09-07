@@ -141,7 +141,7 @@ export default function Home() {
               <li className="reveal reveal-4">
                 <Node on={active === "aether"} />
                 <p>
-                  right now i&apos;m building super-materials with ai @ <Spot k="aether" href="https://aetherbio.com">aether</Spot>
+                  right now, i&apos;m building super-materials with ai @ <Spot k="aether" href="https://aetherbio.com">aether</Spot>
                 </p>
               </li>
               <li className="reveal reveal-5">
