@@ -13,7 +13,7 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        serif: ['var(--font-instrument-serif)', 'Georgia', 'ui-serif', 'serif'],
+        serif: ['var(--font-bodoni)', 'Didot', 'Bodoni MT', 'Georgia', 'serif'],
       },
       colors: {
         background: 'hsl(var(--background))',
