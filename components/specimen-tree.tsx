@@ -59,23 +59,23 @@ function buildTree(w: number, h: number, seed: number) {
     segments.push({ x1: x, y1: y, x2, y2, w1: w, w2: wEnd, start: t, dur: len })
     const done = t + len
 
-    if (depth === 0 || len < UNIT * 0.04) {
-      tips.push({ x: x2, y: y2, angle, at: done, size: RING * (0.8 + rand() * 0.5) })
+    if (depth === 0 || len < UNIT * 0.022) {
+      tips.push({ x: x2, y: y2, angle, at: done, size: RING * (0.7 + rand() * 0.6) })
       return
     }
 
     // a narrow spread keeps the tree taller than it is wide, so height is what fills
     const spread = 0.28 + rand() * 0.22
-    const branches = depth > 2 && rand() < 0.42 ? 3 : 2
+    const branches = depth > 2 && rand() < 0.4 ? 3 : 2
     for (let i = 0; i < branches; i++) {
       const offset = branches === 2 ? (i === 0 ? -spread : spread) : (i - 1) * spread * 1.2
       const wobble = (rand() - 0.5) * 0.24
-      grow(x2, y2, angle + offset + wobble, len * (0.74 + rand() * 0.08), depth - 1, done, wEnd)
+      grow(x2, y2, angle + offset + wobble, len * (0.72 + rand() * 0.08), depth - 1, done, wEnd)
     }
   }
 
   // a fat trunk that thins as it divides
-  grow(0, 0, -Math.PI / 2, UNIT, 7, 0, 15)
+  grow(0, 0, -Math.PI / 2, UNIT, 9, 0, 17)
 
   // measure, leaving room for the rings that sit on the tips
   let minX = Infinity
@@ -120,7 +120,7 @@ function buildTree(w: number, h: number, seed: number) {
   for (const t of tips) {
     t.x = t.x * scaleX + offsetX
     t.y = t.y * scaleY + offsetY
-    t.size = Math.max(3, Math.min(8.5, t.size * ringScale))
+    t.size = Math.max(2, Math.min(5.5, t.size * ringScale))
     t.at *= timeScale
   }
 
@@ -152,6 +152,7 @@ export default function SpecimenTree({ visible }: { visible: boolean }) {
     let built = false
     let lastW = 0
     let lastH = 0
+    let baked: HTMLCanvasElement | null = null
 
     const rebuild = () => {
       const w = canvas.clientWidth
@@ -169,6 +170,7 @@ export default function SpecimenTree({ visible }: { visible: boolean }) {
       canvas.height = Math.floor(height * dpr)
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
       tree = buildTree(width, height, Math.floor(Math.random() * 1e9))
+      baked = null
       const now = performance.now()
       // only the first build animates; a later resize just re-fits the grown tree
       growthStart = built ? now - 60000 : now
@@ -180,32 +182,87 @@ export default function SpecimenTree({ visible }: { visible: boolean }) {
     const ro = new ResizeObserver(rebuild)
     ro.observe(canvas)
 
-    const ring = (x: number, y: number, r: number, rot: number, alpha: number) => {
-      ctx.strokeStyle = `rgba(${LEAF}, ${alpha})`
-      ctx.lineWidth = 1
-      ctx.beginPath()
+    const ring = (c: CanvasRenderingContext2D, x: number, y: number, r: number, rot: number, alpha: number) => {
+      c.strokeStyle = `rgba(${LEAF}, ${alpha})`
+      c.lineWidth = 1
+      c.beginPath()
       for (let i = 0; i < 6; i++) {
         const a = rot + (i * Math.PI) / 3
         const px = x + Math.cos(a) * r
         const py = y + Math.sin(a) * r
-        if (i === 0) ctx.moveTo(px, py)
-        else ctx.lineTo(px, py)
+        if (i === 0) c.moveTo(px, py)
+        else c.lineTo(px, py)
       }
-      ctx.closePath()
-      ctx.stroke()
+      c.closePath()
+      c.stroke()
       // the inner circle that marks an aromatic ring
-      ctx.beginPath()
-      ctx.arc(x, y, r * 0.5, 0, Math.PI * 2)
-      ctx.strokeStyle = `rgba(${LEAF}, ${alpha * 0.6})`
-      ctx.stroke()
+      c.beginPath()
+      c.arc(x, y, r * 0.5, 0, Math.PI * 2)
+      c.strokeStyle = `rgba(${LEAF}, ${alpha * 0.6})`
+      c.stroke()
+    }
+
+    /** paint the tree at a point in its growth into any context */
+    const drawTree = (c: CanvasRenderingContext2D, elapsed: number, alpha: number) => {
+      // Branches, drawn as tapered solids rather than constant-width strokes —
+      // that taper is most of what makes it read as a tree instead of line art.
+      c.fillStyle = `rgba(${BARK}, ${0.82 * alpha})`
+      for (const s of tree.segments) {
+        const p = Math.max(0, Math.min(1, (elapsed - s.start) / s.dur))
+        if (p <= 0) continue
+        const ex = s.x1 + (s.x2 - s.x1) * p
+        const ey = s.y1 + (s.y2 - s.y1) * p
+        const ew = s.w1 + (s.w2 - s.w1) * p
+        const dx = ex - s.x1
+        const dy = ey - s.y1
+        const len = Math.hypot(dx, dy)
+        if (len < 0.01) continue
+        const nx = -dy / len
+        const ny = dx / len
+        const h1 = s.w1 / 2
+        const h2 = ew / 2
+        c.beginPath()
+        c.moveTo(s.x1 + nx * h1, s.y1 + ny * h1)
+        c.lineTo(ex + nx * h2, ey + ny * h2)
+        c.lineTo(ex - nx * h2, ey - ny * h2)
+        c.lineTo(s.x1 - nx * h1, s.y1 - ny * h1)
+        c.closePath()
+        c.fill()
+        if (h1 > 0.7) {
+          c.beginPath()
+          c.arc(s.x1, s.y1, h1, 0, Math.PI * 2)
+          c.fill()
+        }
+      }
+      for (const tip of tree.tips) {
+        const p = Math.max(0, Math.min(1, (elapsed - tip.at) / 0.55))
+        if (p <= 0) continue
+        ring(c, tip.x, tip.y, tip.size * p, tip.angle, 0.62 * alpha * p)
+      }
+    }
+
+    /** once grown, render the tree once and reuse it — thousands of segments
+        are far too many to re-path every frame */
+    const totalGrowth = () => tree.segments.reduce((m, s) => Math.max(m, s.start + s.dur), 0) + 0.6
+
+    const bake = () => {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2)
+      const off = document.createElement("canvas")
+      off.width = Math.floor(width * dpr)
+      off.height = Math.floor(height * dpr)
+      const c = off.getContext("2d")
+      if (!c) return
+      c.setTransform(dpr, 0, 0, dpr, 0, 0)
+      drawTree(c, Number.POSITIVE_INFINITY, 1)
+      baked = off
     }
 
     const drawBird = (b: Bird, now: number, alpha: number) => {
       const flap = 0.35 + 0.65 * Math.abs(Math.sin((now - b.born) / 150 + b.phase))
       const w = b.size
-      const h = b.size * 0.62 * flap
+      const h = b.size * 0.7 * flap
       ctx.strokeStyle = `rgba(${BIRD}, ${alpha})`
-      ctx.lineWidth = 1.3
+      ctx.lineWidth = Math.max(1.8, b.size * 0.22)
       ctx.lineCap = "round"
       ctx.beginPath()
       ctx.moveTo(b.x - w, b.y)
@@ -225,48 +282,13 @@ export default function SpecimenTree({ visible }: { visible: boolean }) {
       if (fade > 0.01 && width > 2) {
         const elapsed = reduced ? 999 : (now - growthStart) / 1000
 
-        // Branches, drawn as tapered solids rather than constant-width strokes —
-        // that taper is most of what makes it read as a tree instead of line art.
-        ctx.fillStyle = `rgba(${BARK}, ${0.82 * fade})`
-        for (const s of tree.segments) {
-          const p = Math.max(0, Math.min(1, (elapsed - s.start) / s.dur))
-          if (p <= 0) continue
-          const ex = s.x1 + (s.x2 - s.x1) * p
-          const ey = s.y1 + (s.y2 - s.y1) * p
-          const ew = s.w1 + (s.w2 - s.w1) * p
-          const dx = ex - s.x1
-          const dy = ey - s.y1
-          const len = Math.hypot(dx, dy)
-          if (len < 0.01) continue
-          // unit normal, to offset each side by half the local width
-          const nx = -dy / len
-          const ny = dx / len
-          const h1 = s.w1 / 2
-          const h2 = ew / 2
-          ctx.beginPath()
-          ctx.moveTo(s.x1 + nx * h1, s.y1 + ny * h1)
-          ctx.lineTo(ex + nx * h2, ey + ny * h2)
-          ctx.lineTo(ex - nx * h2, ey - ny * h2)
-          ctx.lineTo(s.x1 - nx * h1, s.y1 - ny * h1)
-          ctx.closePath()
-          ctx.fill()
-          // a disc at each end rounds the fork so limbs read as continuous
-          ctx.beginPath()
-          ctx.arc(s.x1, s.y1, h1, 0, Math.PI * 2)
-          ctx.fill()
-          if (h2 > 0.6) {
-            ctx.beginPath()
-            ctx.arc(ex, ey, h2, 0, Math.PI * 2)
-            ctx.fill()
-          }
-        }
-
-        // aromatic rings where leaves would be
-        for (const tip of tree.tips) {
-          const p = Math.max(0, Math.min(1, (elapsed - tip.at) / 0.55))
-          if (p <= 0) continue
-          const sway = reduced ? 0 : Math.sin(now / 1400 + tip.x * 0.05) * 0.12
-          ring(tip.x, tip.y, tip.size * p, tip.angle + sway, 0.62 * fade * p)
+        if (baked) {
+          ctx.globalAlpha = fade
+          ctx.drawImage(baked, 0, 0, width, height)
+          ctx.globalAlpha = 1
+        } else {
+          drawTree(ctx, elapsed, fade)
+          if (elapsed >= totalGrowth()) bake()
         }
 
         // birds lift off a tip once the canopy is in
@@ -279,14 +301,14 @@ export default function SpecimenTree({ visible }: { visible: boolean }) {
             birds.push({
               x: tip.x,
               y: tip.y,
-              vx: toRight * (14 + Math.random() * 18),
-              vy: -(10 + Math.random() * 16),
+              vx: toRight * (34 + Math.random() * 42),
+              vy: -(22 + Math.random() * 30),
               born: now,
-              size: 3.5 + Math.random() * 3,
+              size: 8 + Math.random() * 7,
               phase: Math.random() * Math.PI * 2 + n * 0.9,
             })
           }
-          nextBird = now + 550 + Math.random() * 1200
+          nextBird = now + 380 + Math.random() * 900
         }
 
         for (let i = birds.length - 1; i >= 0; i--) {
@@ -298,7 +320,7 @@ export default function SpecimenTree({ visible }: { visible: boolean }) {
           }
           b.x += (b.vx / 60) * (reduced ? 0 : 1)
           b.y += (b.vy / 60) * (reduced ? 0 : 1)
-          b.vy -= 0.012 // drift upward as they get away
+          b.vy -= 0.05 // climb as they get away
           const alpha = Math.min(1, age / 0.4) * Math.max(0, 1 - age / 6) * 0.75 * fade
           drawBird(b, now, alpha)
         }
