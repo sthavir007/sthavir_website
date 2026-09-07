@@ -47,6 +47,16 @@ function Node({ on }: { on: boolean }) {
 export default function Home() {
   const [active, setActive] = useState<HoverKey | null>(null)
   const [poster, setPoster] = useState<keyof typeof POSTERS | null>(null)
+  const [lastActive, setLastActive] = useState<HoverKey | null>(null)
+  const [isTouch, setIsTouch] = useState(false)
+
+  useEffect(() => {
+    if (active) setLastActive(active)
+  }, [active])
+
+  useEffect(() => {
+    setIsTouch(window.matchMedia("(hover: none)").matches)
+  }, [])
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && setPoster(null)
@@ -70,7 +80,20 @@ export default function Home() {
   /** a term that swaps the photo on hover, and links out on click when it has a destination */
   const Spot = ({ k, href, children }: { k: HoverKey; href?: string; children: React.ReactNode }) =>
     href ? (
-      <a href={href} target="_blank" rel="noopener noreferrer" {...hoverProps(k)} className={linkClass(active === k)}>
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        {...hoverProps(k)}
+        onClick={(e) => {
+          // touch has no hover, so the first tap reveals the photo instead of leaving
+          if (isTouch && active !== k) {
+            e.preventDefault()
+            setActive(k)
+          }
+        }}
+        className={linkClass(active === k)}
+      >
         {children}
       </a>
     ) : (
@@ -91,11 +114,31 @@ export default function Home() {
       target="_blank"
       rel="noopener noreferrer"
       {...(k ? hoverProps(k) : {})}
+      onClick={(e) => {
+        if (k && isTouch && active !== k) {
+          e.preventDefault()
+          setActive(k)
+        }
+      }}
       className={linkClass(!!k && active === k)}
     >
       {children}
     </a>
   )
+
+  /** on small screens, the photo drops in under its own line instead of far below */
+  const Drop = ({ keys }: { keys: HoverKey[] }) => {
+    const open = active !== null && keys.includes(active)
+    const shown = active ?? lastActive
+    return (
+      <div className={`drop ${open ? "drop-open" : ""}`}>
+        {shown && keys.includes(shown) && (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={IMAGES[shown].src} alt={IMAGES[shown].alt} className="drop-img" decoding="async" />
+        )}
+      </div>
+    )
+  }
 
   /** opens a poster in the viewer */
   const PosterLink = ({ k, children }: { k: keyof typeof POSTERS; children: React.ReactNode }) => (
@@ -114,29 +157,32 @@ export default function Home() {
 
       <main className="relative z-10 flex-1 px-6 md:px-12 lg:px-16 pt-14 md:pt-20 pb-16">
         <div className="max-w-[1320px] mx-auto">
-          <h1 className="reveal text-5xl sm:text-6xl md:text-7xl tracking-[-0.01em]">sthavir vinjamuri</h1>
+          <h1 className="reveal title tracking-[-0.01em]">sthavir vinjamuri</h1>
           <div className="reveal rule mt-5 mb-10 md:mb-14" />
 
           <div className="flex flex-col lg:flex-row gap-12 lg:gap-14 xl:gap-20">
             {/* the chain: each fact is a unit on a backbone */}
-            <ol className="chain flex-1 min-w-0 max-w-3xl text-xl sm:text-[1.35rem] md:text-[1.5rem] leading-relaxed">
+            <ol className="chain flex-1 min-w-0 max-w-3xl leading-relaxed">
               <li className="reveal reveal-2">
                 <Node on={active === "ucsd"} />
                 <p>
                   i&apos;m an 18 y/o studying bioengineering at <Spot k="ucsd" href="https://be.ucsd.edu/">ucsd</Spot>
                 </p>
+                <Drop keys={["ucsd"]} />
               </li>
               <li className="reveal reveal-3">
                 <Node on={active === "tjhsst"} />
                 <p>
                   i&apos;m from dc and went to <Spot k="tjhsst" href="https://tjhsst.fcps.edu/">tjhsst</Spot>
                 </p>
+                <Drop keys={["tjhsst"]} />
               </li>
               <li className="reveal reveal-4">
                 <Node on={active === "aether"} />
                 <p>
                   right now, i&apos;m building super-materials with ai @ <Spot k="aether" href="https://aetherbio.com">aether</Spot>
                 </p>
+                <Drop keys={["aether"]} />
               </li>
               <li className="reveal reveal-5">
                 <Node on={active === "qdots"} />
@@ -151,6 +197,7 @@ export default function Home() {
                     skmc
                   </Out>, and <Out href="https://alirezaermagun.com/">gmu</Out>.
                 </p>
+                <Drop keys={["qdots"]} />
               </li>
               <li className="reveal reveal-6">
                 <Node on={active === "1517" || active === "tjbiotech"} />
@@ -158,6 +205,7 @@ export default function Home() {
                   i was invited to <Spot k="1517" href="https://1517fund.com">1517 fund 2e camp</Spot> and led{" "}
                   <Spot k="tjbiotech">tj biotech club</Spot>
                 </p>
+                <Drop keys={["1517", "tjbiotech"]} />
               </li>
               <li className="reveal reveal-7">
                 <Node on={active === "music"} />
@@ -167,18 +215,19 @@ export default function Home() {
                     music
                   </Out>
                 </p>
+                <Drop keys={["music"]} />
               </li>
             </ol>
 
             {/* specimen frame — the dedicated home for the photos */}
-            <div className="reveal reveal-4 w-full lg:w-[430px] xl:w-[540px] shrink-0">
+            <div className="reveal reveal-4 photo-col shrink-0">
               <div className="lg:sticky lg:top-10">
                 <div className={`specimen relative p-3 md:p-4 ${active ? "specimen-on" : ""}`}>
                   <span className="tick tl" />
                   <span className="tick tr" />
                   <span className="tick bl" />
                   <span className="tick br" />
-                  <div className="relative w-full h-[300px] sm:h-[400px] lg:h-[440px] xl:h-[530px]">
+                  <div className="stage relative w-full">
                     {/* nothing hovered: the frame grows a tree instead of sitting empty */}
                     <SpecimenTree visible={!active} />
                     {(Object.keys(IMAGES) as HoverKey[]).map((k) => (
@@ -257,6 +306,60 @@ export default function Home() {
       )}
 
       <style jsx>{`
+        /* Fluid sizing throughout, so a 13" laptop and a 27" display both get
+           sensible proportions instead of jumping between breakpoints. */
+        .title {
+          font-size: clamp(2.5rem, 5.6vw, 4.75rem);
+          line-height: 1.02;
+        }
+        .chain {
+          font-size: clamp(1.125rem, 1.5vw, 1.55rem);
+        }
+        /* Below the desktop breakpoint the side frame is replaced by a drawer
+           that opens under whichever line you tapped, so the photo is right
+           where you are rather than a long scroll away. */
+        .photo-col {
+          display: none;
+        }
+        :global(.drop) {
+          max-height: 0;
+          opacity: 0;
+          overflow: hidden;
+          transition:
+            max-height 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+            opacity 0.3s ease,
+            margin-top 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        :global(.drop-open) {
+          max-height: 60vh;
+          opacity: 1;
+          margin-top: 16px;
+        }
+        :global(.drop-img) {
+          display: block;
+          width: 100%;
+          max-height: 52vh;
+          object-fit: contain;
+          padding: 8px;
+          border: 1px solid rgba(138, 124, 98, 0.45);
+          background: rgba(255, 253, 244, 0.35);
+          filter: drop-shadow(0 12px 28px rgba(70, 58, 38, 0.3));
+        }
+
+        @media (min-width: 1024px) {
+          .photo-col {
+            display: block;
+            width: 44%;
+            max-width: 640px;
+          }
+          :global(.drop) {
+            display: none;
+          }
+          .stage {
+            height: clamp(380px, 66vh, 680px);
+          }
+        }
+
         .rule {
           height: 1px;
           max-width: 240px;

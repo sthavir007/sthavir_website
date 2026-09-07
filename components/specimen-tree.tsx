@@ -18,7 +18,9 @@ type Segment = {
   y1: number
   x2: number
   y2: number
-  width: number
+  /** limbs taper, so each segment has a width at each end */
+  w1: number
+  w2: number
   /** seconds after growth starts that this segment begins drawing */
   start: number
   dur: number
@@ -50,28 +52,30 @@ function buildTree(w: number, h: number, seed: number) {
   const UNIT = 100
   const RING = 7 // tip ring radius, same units
 
-  const grow = (x: number, y: number, angle: number, len: number, depth: number, t: number, width: number) => {
+  const grow = (x: number, y: number, angle: number, len: number, depth: number, t: number, w: number) => {
     const x2 = x + Math.cos(angle) * len
     const y2 = y + Math.sin(angle) * len
-    segments.push({ x1: x, y1: y, x2, y2, width, start: t, dur: len })
+    const wEnd = w * 0.7
+    segments.push({ x1: x, y1: y, x2, y2, w1: w, w2: wEnd, start: t, dur: len })
     const done = t + len
 
-    if (depth === 0 || len < UNIT * 0.045) {
+    if (depth === 0 || len < UNIT * 0.04) {
       tips.push({ x: x2, y: y2, angle, at: done, size: RING * (0.8 + rand() * 0.5) })
       return
     }
 
     // a narrow spread keeps the tree taller than it is wide, so height is what fills
-    const spread = 0.3 + rand() * 0.22
-    const branches = depth > 2 && rand() < 0.3 ? 3 : 2
+    const spread = 0.28 + rand() * 0.22
+    const branches = depth > 2 && rand() < 0.42 ? 3 : 2
     for (let i = 0; i < branches; i++) {
       const offset = branches === 2 ? (i === 0 ? -spread : spread) : (i - 1) * spread * 1.2
-      const wobble = (rand() - 0.5) * 0.2
-      grow(x2, y2, angle + offset + wobble, len * (0.74 + rand() * 0.08), depth - 1, done, Math.max(0.5, width * 0.7))
+      const wobble = (rand() - 0.5) * 0.24
+      grow(x2, y2, angle + offset + wobble, len * (0.74 + rand() * 0.08), depth - 1, done, wEnd)
     }
   }
 
-  grow(0, 0, -Math.PI / 2, UNIT, 7, 0, 9)
+  // a fat trunk that thins as it divides
+  grow(0, 0, -Math.PI / 2, UNIT, 7, 0, 15)
 
   // measure, leaving room for the rings that sit on the tips
   let minX = Infinity
@@ -108,14 +112,15 @@ function buildTree(w: number, h: number, seed: number) {
     s.y1 = s.y1 * scaleY + offsetY
     s.x2 = s.x2 * scaleX + offsetX
     s.y2 = s.y2 * scaleY + offsetY
-    s.width = Math.max(0.6, s.width * ringScale)
+    s.w1 = Math.max(0.9, s.w1 * ringScale)
+    s.w2 = Math.max(0.8, s.w2 * ringScale)
     s.start *= timeScale
     s.dur *= timeScale
   }
   for (const t of tips) {
     t.x = t.x * scaleX + offsetX
     t.y = t.y * scaleY + offsetY
-    t.size = Math.max(2.6, Math.min(7, t.size * ringScale))
+    t.size = Math.max(3, Math.min(8.5, t.size * ringScale))
     t.at *= timeScale
   }
 
@@ -220,17 +225,40 @@ export default function SpecimenTree({ visible }: { visible: boolean }) {
       if (fade > 0.01 && width > 2) {
         const elapsed = reduced ? 999 : (now - growthStart) / 1000
 
-        // branches
-        ctx.lineCap = "round"
+        // Branches, drawn as tapered solids rather than constant-width strokes —
+        // that taper is most of what makes it read as a tree instead of line art.
+        ctx.fillStyle = `rgba(${BARK}, ${0.82 * fade})`
         for (const s of tree.segments) {
           const p = Math.max(0, Math.min(1, (elapsed - s.start) / s.dur))
           if (p <= 0) continue
-          ctx.strokeStyle = `rgba(${BARK}, ${0.72 * fade})`
-          ctx.lineWidth = s.width
+          const ex = s.x1 + (s.x2 - s.x1) * p
+          const ey = s.y1 + (s.y2 - s.y1) * p
+          const ew = s.w1 + (s.w2 - s.w1) * p
+          const dx = ex - s.x1
+          const dy = ey - s.y1
+          const len = Math.hypot(dx, dy)
+          if (len < 0.01) continue
+          // unit normal, to offset each side by half the local width
+          const nx = -dy / len
+          const ny = dx / len
+          const h1 = s.w1 / 2
+          const h2 = ew / 2
           ctx.beginPath()
-          ctx.moveTo(s.x1, s.y1)
-          ctx.lineTo(s.x1 + (s.x2 - s.x1) * p, s.y1 + (s.y2 - s.y1) * p)
-          ctx.stroke()
+          ctx.moveTo(s.x1 + nx * h1, s.y1 + ny * h1)
+          ctx.lineTo(ex + nx * h2, ey + ny * h2)
+          ctx.lineTo(ex - nx * h2, ey - ny * h2)
+          ctx.lineTo(s.x1 - nx * h1, s.y1 - ny * h1)
+          ctx.closePath()
+          ctx.fill()
+          // a disc at each end rounds the fork so limbs read as continuous
+          ctx.beginPath()
+          ctx.arc(s.x1, s.y1, h1, 0, Math.PI * 2)
+          ctx.fill()
+          if (h2 > 0.6) {
+            ctx.beginPath()
+            ctx.arc(ex, ey, h2, 0, Math.PI * 2)
+            ctx.fill()
+          }
         }
 
         // aromatic rings where leaves would be
