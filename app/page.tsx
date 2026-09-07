@@ -151,7 +151,11 @@ export default function Home() {
                   <Out href={MYELOID_PAPER}>single cell atlas</Out>, explored{" "}
                   <Out href="https://pubmed.ncbi.nlm.nih.gov/39629824/">digital twinning</Out>, investigated{" "}
                   <PosterLink k="cooling">cooling center access</PosterLink>, and created{" "}
-                  <Spot k="qdots">banana quantum dots</Spot> at harvard, skmc, and gmu.
+                  <Spot k="qdots">banana quantum dots</Spot> at{" "}
+                  <Out href="https://bnv-lab.org/">harvard</Out>,{" "}
+                  <Out href="https://www.jefferson.edu/academics/colleges-schools-institutes/skmc/departments/neurosurgery.html">
+                    skmc
+                  </Out>, and <Out href="https://alirezaermagun.com/">gmu</Out>.
                 </p>
               </li>
               <li className="reveal reveal-6">
