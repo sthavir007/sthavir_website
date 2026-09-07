@@ -45,14 +45,8 @@ function Node({ on }: { on: boolean }) {
 }
 
 export default function Home() {
-  const [currentDay, setCurrentDay] = useState("")
   const [active, setActive] = useState<HoverKey | null>(null)
   const [poster, setPoster] = useState<keyof typeof POSTERS | null>(null)
-
-  useEffect(() => {
-    const days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"]
-    setCurrentDay(days[new Date().getDay()])
-  }, [])
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && setPoster(null)
@@ -238,7 +232,6 @@ export default function Home() {
             <Instagram size={20} />
           </a>
         </div>
-        <p className="mt-3 text-sm text-gray-600">have a great {currentDay}!</p>
       </footer>
 
       {poster && (
