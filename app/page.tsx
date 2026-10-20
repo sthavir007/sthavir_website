@@ -166,7 +166,7 @@ export default function Home() {
               <li className="reveal reveal-2">
                 <Node on={active === "ucsd"} />
                 <p>
-                  i&apos;m an 18 y/o studying bioengineering at <Spot k="ucsd" href="https://be.ucsd.edu/">ucsd</Spot>
+                  i&apos;m a 19 y/o studying bioengineering at <Spot k="ucsd" href="https://be.ucsd.edu/">ucsd</Spot>
                 </p>
                 <Drop keys={["ucsd"]} />
               </li>
