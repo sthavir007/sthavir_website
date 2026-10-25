@@ -38,7 +38,7 @@ export default function Research() {
             <div className="border-b border-gray-300 pb-6">
               <h2 className="text-lg font-semibold mb-3">
                 <a
-                  href="https://www.biorxiv.org/content/10.1101/2025.05.16.654622v1.full"
+                  href="https://www.cell.com/iscience/fulltext/S2589-0042(26)02610-6"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="underline hover:text-red-500 transition-colors"
@@ -47,7 +47,7 @@ export default function Research() {
                   reveals reversibility of microglial activation
                 </a>
               </h2>
-              <p className="text-gray-600 mb-2">Preprint on bioRxiv</p>
+              <p className="text-gray-600 mb-2">Published in iScience</p>
               <p className="text-gray-600 mb-2">Paper publishing to Molecular Therapy</p>
               <p className="text-gray-600 mb-2">Poster accepted to 2025 Children's Tumor Foundation NF Conference</p>
               <p className="leading-relaxed">
