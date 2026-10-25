@@ -28,7 +28,7 @@ const POSTERS = {
   },
 }
 
-const MYELOID_PAPER = "https://www.biorxiv.org/content/10.1101/2025.05.16.654622v1.full"
+const MYELOID_PAPER = "https://www.cell.com/iscience/fulltext/S2589-0042(26)02610-6"
 
 /** a bond node in the left gutter — fills in when its line is the active one */
 function Node({ on }: { on: boolean }) {
