@@ -5,7 +5,7 @@ import { useState, useEffect, useRef } from "react"
 import Molecules from "@/components/molecules"
 import SpecimenTree from "@/components/specimen-tree"
 
-type HoverKey = "ucsd" | "tjhsst" | "aether" | "1517" | "tjbiotech" | "music" | "qdots" | "fmrca" | "myeloid" | "dtwin" | "cooling" | "harvard" | "gmu"
+type HoverKey = "ucsd" | "tjhsst" | "aether" | "1517" | "tjbiotech" | "music" | "qdots" | "fmrca" | "myeloid" | "dtwin" | "cooling" | "harvard" | "gmu" | "cars"
 
 // `cta` marks snapshots of things you can open, so the frame says so
 const IMAGES: Record<HoverKey, { src: string; alt: string; cta?: boolean }> = {
@@ -22,6 +22,7 @@ const IMAGES: Record<HoverKey, { src: string; alt: string; cta?: boolean }> = {
   cooling: { src: "/images/cooling-poster.jpg", alt: "cooling center access in nyc poster", cta: true },
   harvard: { src: "/images/harvard.jpg", alt: "with the baranov lab at harvard", cta: true },
   gmu: { src: "/images/gmu.jpg", alt: "presenting the cooling center poster at gmu", cta: true },
+  cars: { src: "/images/cars.jpg", alt: "", cta: true },
 }
 
 const POSTERS = {
@@ -249,14 +250,16 @@ export default function Home() {
                 <Drop keys={["1517", "tjbiotech"]} />
               </li>
               <li className="reveal" style={{ "--i": 7 } as React.CSSProperties}>
-                <Node on={active === "music"} />
+                <Node on={active === "cars" || active === "music"} />
                 <p>
-                  i also enjoy reading <Out href="https://www.caranddriver.com/">car blogs</Out> and listening to{" "}
+                  i also enjoy reading <Out href="https://www.caranddriver.com/" k="cars">
+                    car blogs
+                  </Out> and listening to{" "}
                   <Out href="https://open.spotify.com/track/2cYqizR4lgvp4Qu6IQ3qGN" k="music">
                     music
                   </Out>
                 </p>
-                <Drop keys={["music"]} />
+                <Drop keys={["cars", "music"]} />
               </li>
             </ol>
 
