@@ -14,7 +14,7 @@ const IMAGES: Record<HoverKey, { src: string; alt: string; cta?: boolean }> = {
   aether: { src: "/images/aether.jpg", alt: "building at aether", cta: true },
   "1517": { src: "/images/1517.jpg", alt: "1517 fund 2e camp", cta: true },
   tjbiotech: { src: "/images/tjbiotech.jpg", alt: "tj biotech club" },
-  music: { src: "/images/astroworld.jpg", alt: "astroworld by travis scott" },
+  music: { src: "/images/astroworld.jpg", alt: "astroworld by travis scott", cta: true },
   qdots: { src: "/images/qdots.jpg", alt: "banana carbon quantum dots fluorescing under uv" },
   fmrca: { src: "/images/fmrca-poster.jpg", alt: "fmrca fetal mouse retina atlas poster", cta: true },
   myeloid: { src: "/images/myeloid-paper.jpg", alt: "iscience paper on retinal microglia after transplantation", cta: true },
