@@ -1,7 +1,7 @@
 "use client"
 
 import { Instagram, Linkedin, X } from "lucide-react"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import Molecules from "@/components/molecules"
 import SpecimenTree from "@/components/specimen-tree"
 
@@ -56,6 +56,18 @@ export default function Home() {
   const [poster, setPoster] = useState<keyof typeof POSTERS | null>(null)
   const [lastActive, setLastActive] = useState<HoverKey | null>(null)
   const [isTouch, setIsTouch] = useState(false)
+  // A cursor resting on the page while it loads gets "hovered" by whichever
+  // link bubbles in underneath it. Photos only answer hover once the mouse
+  // has actually moved.
+  const moved = useRef(false)
+
+  useEffect(() => {
+    const onMove = (e: PointerEvent) => {
+      if (e.pointerType === "mouse" && (e.movementX !== 0 || e.movementY !== 0)) moved.current = true
+    }
+    window.addEventListener("pointermove", onMove)
+    return () => window.removeEventListener("pointermove", onMove)
+  }, [])
 
   useEffect(() => {
     if (active) setLastActive(active)
@@ -72,7 +84,13 @@ export default function Home() {
   }, [])
 
   const hoverProps = (k: HoverKey) => ({
-    onMouseEnter: () => setActive(k),
+    onMouseEnter: () => moved.current && setActive(k),
+    // the first real nudge over a link the cursor was already resting on
+    onMouseMove: (e: React.MouseEvent) => {
+      if (e.movementX === 0 && e.movementY === 0) return
+      moved.current = true
+      setActive((c) => (c === k ? c : k))
+    },
     onMouseLeave: () => setActive((c) => (c === k ? null : c)),
     onFocus: () => setActive(k),
     onBlur: () => setActive((c) => (c === k ? null : c)),
