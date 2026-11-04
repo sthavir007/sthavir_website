@@ -5,9 +5,10 @@ import { useState, useEffect } from "react"
 import Molecules from "@/components/molecules"
 import SpecimenTree from "@/components/specimen-tree"
 
-type HoverKey = "ucsd" | "tjhsst" | "aether" | "1517" | "tjbiotech" | "music" | "qdots"
+type HoverKey = "ucsd" | "tjhsst" | "aether" | "1517" | "tjbiotech" | "music" | "qdots" | "fmrca" | "myeloid" | "dtwin" | "cooling" | "harvard" | "gmu"
 
-const IMAGES: Record<HoverKey, { src: string; alt: string }> = {
+// `cta` marks snapshots of things you can open, so the frame says so
+const IMAGES: Record<HoverKey, { src: string; alt: string; cta?: boolean }> = {
   ucsd: { src: "/images/ucsd.jpg", alt: "at ucsd" },
   tjhsst: { src: "/images/tjhsst.jpg", alt: "tjhsst graduation" },
   aether: { src: "/images/aether.jpg", alt: "building at aether" },
@@ -15,6 +16,12 @@ const IMAGES: Record<HoverKey, { src: string; alt: string }> = {
   tjbiotech: { src: "/images/tjbiotech.jpg", alt: "tj biotech club" },
   music: { src: "/images/astroworld.jpg", alt: "astroworld by travis scott" },
   qdots: { src: "/images/qdots.jpg", alt: "banana carbon quantum dots fluorescing under uv" },
+  fmrca: { src: "/images/fmrca-poster.jpg", alt: "fmrca fetal mouse retina atlas poster", cta: true },
+  myeloid: { src: "/images/myeloid-paper.jpg", alt: "iscience paper on retinal microglia after transplantation", cta: true },
+  dtwin: { src: "/images/digital-twin-paper.jpg", alt: "paper on digital twinning in spine surgery", cta: true },
+  cooling: { src: "/images/cooling-poster.jpg", alt: "cooling center access in nyc poster", cta: true },
+  harvard: { src: "/images/harvard.jpg", alt: "with the baranov lab at harvard", cta: true },
+  gmu: { src: "/images/gmu.jpg", alt: "presenting the cooling center poster at gmu", cta: true },
 }
 
 const POSTERS = {
@@ -136,70 +143,86 @@ export default function Home() {
           // eslint-disable-next-line @next/next/no-img-element
           <img src={IMAGES[shown].src} alt={IMAGES[shown].alt} className="drop-img" decoding="async" />
         )}
+        {shown && keys.includes(shown) && IMAGES[shown].cta && <p className="cta cta-drop">tap again to open!</p>}
       </div>
     )
   }
 
   /** opens a poster in the viewer */
-  const PosterLink = ({ k, children }: { k: keyof typeof POSTERS; children: React.ReactNode }) => (
+  const PosterLink = ({ k, children }: { k: keyof typeof POSTERS; children: React.ReactNode }) => {
+    const hk = k in IMAGES ? (k as HoverKey) : null
+    return (
     <button
       type="button"
-      onClick={() => setPoster(k)}
-      className="text-[#b3202c] underline decoration-dotted decoration-1 underline-offset-4 hover:no-underline transition-all"
+      {...(hk ? hoverProps(hk) : {})}
+      onClick={() => {
+        if (hk && isTouch && active !== hk) return setActive(hk)
+        setPoster(k)
+      }}
+      className={`text-[#b3202c] underline decoration-dotted decoration-1 underline-offset-4 hover:no-underline transition-all ${
+        hk && active === hk ? "no-underline" : ""
+      }`}
     >
       {children}
     </button>
-  )
+    )
+  }
 
   return (
     <div className="min-h-screen flex flex-col bg-[#f0ead6] text-black font-serif relative overflow-x-hidden">
       <Molecules />
 
-      <main className="relative z-10 flex-1 px-6 md:px-12 lg:px-16 pt-14 md:pt-20 pb-16">
+      <main className="relative z-10 flex-1 px-6 md:px-12 lg:px-16 pt-14 md:pt-20 pb-28">
         <div className="max-w-[1320px] mx-auto">
-          <h1 className="reveal title tracking-[-0.01em]">sthavir vinjamuri</h1>
-          <div className="reveal rule mt-5 mb-10 md:mb-14" />
+          <h1 className="reveal title tracking-[-0.01em]" style={{ "--i": 0 } as React.CSSProperties}>sthavir vinjamuri</h1>
+          <div className="reveal rule mt-5 mb-10 md:mb-14" style={{ "--i": 1 } as React.CSSProperties} />
 
           <div className="flex flex-col lg:flex-row gap-12 lg:gap-14 xl:gap-20">
             {/* the chain: each fact is a unit on a backbone */}
             <ol className="chain flex-1 min-w-0 max-w-3xl leading-relaxed">
-              <li className="reveal reveal-2">
+              <li className="reveal" style={{ "--i": 2 } as React.CSSProperties}>
                 <Node on={active === "ucsd"} />
                 <p>
                   i&apos;m a 19 y/o studying bioengineering at <Spot k="ucsd" href="https://be.ucsd.edu/">ucsd</Spot>
                 </p>
                 <Drop keys={["ucsd"]} />
               </li>
-              <li className="reveal reveal-3">
+              <li className="reveal" style={{ "--i": 3 } as React.CSSProperties}>
                 <Node on={active === "tjhsst"} />
                 <p>
                   i&apos;m from dc and went to <Spot k="tjhsst" href="https://tjhsst.fcps.edu/">tjhsst</Spot>
                 </p>
                 <Drop keys={["tjhsst"]} />
               </li>
-              <li className="reveal reveal-4">
+              <li className="reveal" style={{ "--i": 4 } as React.CSSProperties}>
                 <Node on={active === "aether"} />
                 <p>
                   right now, i&apos;m building super-materials with ai @ <Spot k="aether" href="https://aetherbio.com">aether</Spot>
                 </p>
                 <Drop keys={["aether"]} />
               </li>
-              <li className="reveal reveal-5">
-                <Node on={active === "qdots"} />
+              <li className="reveal" style={{ "--i": 5 } as React.CSSProperties}>
+                <Node on={active !== null && ["qdots", "fmrca", "myeloid", "dtwin", "cooling", "harvard", "gmu"].includes(active)} />
                 <p>
                   previously i&apos;ve built a <PosterLink k="fmrca">fetal mouse</PosterLink>{" "}
-                  <Out href={MYELOID_PAPER}>single cell atlas</Out>, explored{" "}
-                  <Out href="https://pubmed.ncbi.nlm.nih.gov/39629824/">digital twinning</Out>, investigated{" "}
+                  <Out href={MYELOID_PAPER} k="myeloid">single cell atlas</Out>, explored{" "}
+                  <Out href="https://pubmed.ncbi.nlm.nih.gov/39629824/" k="dtwin">
+                    digital twinning
+                  </Out>, investigated{" "}
                   <PosterLink k="cooling">cooling center access</PosterLink>, and created{" "}
                   <Spot k="qdots">banana quantum dots</Spot> at{" "}
-                  <Out href="https://bnv-lab.org/">harvard</Out>,{" "}
+                  <Out href="https://bnv-lab.org/" k="harvard">
+                    harvard
+                  </Out>,{" "}
                   <Out href="https://www.jefferson.edu/academics/colleges-schools-institutes/skmc/departments/neurosurgery.html">
                     skmc
-                  </Out>, and <Out href="https://alirezaermagun.com/">gmu</Out>.
+                  </Out>, and <Out href="https://alirezaermagun.com/" k="gmu">
+                    gmu
+                  </Out>.
                 </p>
-                <Drop keys={["qdots"]} />
+                <Drop keys={["fmrca", "myeloid", "dtwin", "cooling", "qdots", "harvard", "gmu"]} />
               </li>
-              <li className="reveal reveal-6">
+              <li className="reveal" style={{ "--i": 6 } as React.CSSProperties}>
                 <Node on={active === "1517" || active === "tjbiotech"} />
                 <p>
                   i was invited to <Spot k="1517" href="https://1517fund.com">1517 fund 2e camp</Spot> and led{" "}
@@ -207,7 +230,7 @@ export default function Home() {
                 </p>
                 <Drop keys={["1517", "tjbiotech"]} />
               </li>
-              <li className="reveal reveal-7">
+              <li className="reveal" style={{ "--i": 7 } as React.CSSProperties}>
                 <Node on={active === "music"} />
                 <p>
                   i also enjoy reading <Out href="https://www.caranddriver.com/">car blogs</Out> and listening to{" "}
@@ -220,7 +243,7 @@ export default function Home() {
             </ol>
 
             {/* specimen frame — the dedicated home for the photos */}
-            <div className="reveal reveal-4 photo-col shrink-0">
+            <div className="reveal photo-col shrink-0" style={{ "--i": 3 } as React.CSSProperties}>
               <div className="lg:sticky lg:top-10">
                 <div className={`specimen relative p-3 md:p-4 ${active ? "specimen-on" : ""}`}>
                   <span className="tick tl" />
@@ -241,6 +264,7 @@ export default function Home() {
                       />
                     ))}
                   </div>
+                  <p className={`cta cta-frame ${active && IMAGES[active].cta ? "cta-on" : ""}`}>click to open!</p>
                 </div>
               </div>
             </div>
@@ -248,7 +272,8 @@ export default function Home() {
         </div>
       </main>
 
-      <footer className="relative z-10 mt-auto px-6 pb-10 pt-4 text-center">
+      {/* pinned so the contact line is always on screen */}
+      <footer style={{ "--i": 8 } as React.CSSProperties} className="reveal fixed inset-x-0 bottom-0 z-20 px-6 py-4 text-center bg-[#f0ead6]/90 backdrop-blur-sm">
         <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-sm md:text-base">
           <a
             href="mailto:svinjamuri@ucsd.edu"
@@ -356,7 +381,8 @@ export default function Home() {
             display: none;
           }
           .stage {
-            height: clamp(380px, 66vh, 680px);
+            /* leaves room for "click to open!" above the pinned footer */
+            height: clamp(340px, calc(100vh - 380px), 680px);
           }
         }
 
@@ -450,23 +476,83 @@ export default function Home() {
           filter: drop-shadow(0 14px 34px rgba(70, 58, 38, 0.34)) blur(0);
         }
 
-        .reveal {
-          animation: rise 0.65s cubic-bezier(0.16, 1, 0.3, 1) both;
+        /* "click to open!" under snapshots of posters and papers */
+        :global(.cta) {
+          margin: 0;
+          font-style: italic;
+          font-size: 0.95rem;
+          color: #b3202c;
+          text-align: center;
         }
-        .reveal-2 { animation-delay: 0.10s; }
-        .reveal-3 { animation-delay: 0.16s; }
-        .reveal-4 { animation-delay: 0.22s; }
-        .reveal-5 { animation-delay: 0.28s; }
-        .reveal-6 { animation-delay: 0.34s; }
-        .reveal-7 { animation-delay: 0.40s; }
+        .cta-frame {
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: -2.1rem;
+          opacity: 0;
+          transform: translateY(-4px);
+          transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .cta-on {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        :global(.cta-drop) {
+          margin-top: 8px;
+        }
 
-        @keyframes rise {
-          from { opacity: 0; transform: translateY(10px); }
-          to   { opacity: 1; transform: translateY(0); }
+        /* entrance: everything bubbles in top to bottom, one wave down the page.
+           --i is each piece's place in the wave. */
+        .reveal {
+          --d: calc(var(--i, 0) * 80ms + 40ms);
+          animation: bubble 1.1s cubic-bezier(0.16, 1, 0.3, 1) var(--d) both;
+          will-change: transform, opacity;
+        }
+        /* opacity and transform only: they run on the compositor, so the wave
+           stays smooth even while the tree and molecules are drawing */
+        @keyframes bubble {
+          0%   { opacity: 0; transform: translate3d(0, 22px, 0) scale(0.965); }
+          100% { opacity: 1; transform: none; }
+        }
+        /* the fixed footer keeps its own positioning, so it only fades and lifts */
+        footer.reveal {
+          animation-name: bubble-footer;
+        }
+        @keyframes bubble-footer {
+          0%   { opacity: 0; transform: translate3d(0, 14px, 0); }
+          100% { opacity: 1; transform: none; }
+        }
+        /* each node ripples as its line lands, and the bond grows down to the next */
+        .chain li.reveal::after {
+          content: "";
+          position: absolute;
+          left: -5px;
+          top: -1px;
+          width: 27px;
+          height: 29px;
+          border-radius: 50%;
+          border: 1.5px solid #b3202c;
+          opacity: 0;
+          pointer-events: none;
+          animation: ripple 1.2s cubic-bezier(0.16, 1, 0.3, 1) calc(var(--d) + 150ms) both;
+        }
+        @keyframes ripple {
+          0%   { opacity: 0.55; transform: scale(0.4); }
+          100% { opacity: 0; transform: scale(2.3); }
+        }
+        .chain li.reveal:not(:last-child)::before {
+          transform-origin: top;
+          animation: bond 0.8s cubic-bezier(0.65, 0, 0.35, 1) calc(var(--d) + 180ms) both;
+        }
+        @keyframes bond {
+          from { transform: scaleY(0); }
+          to   { transform: scaleY(1); }
         }
 
         @media (prefers-reduced-motion: reduce) {
-          .reveal { animation: none; }
+          .reveal,
+          .chain li.reveal::before,
+          .chain li.reveal::after { animation: none; }
         }
       `}</style>
     </div>

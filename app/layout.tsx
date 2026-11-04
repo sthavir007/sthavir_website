@@ -2,6 +2,7 @@ import type React from "react"
 import type { Metadata } from "next"
 import { Inter, Bodoni_Moda } from "next/font/google"
 import "./globals.css"
+import StyledJsxRegistry from "./registry"
 
 const inter = Inter({
   subsets: ["latin"],
@@ -28,7 +29,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="bg-[#f0ead6]">
-      <body className={`${inter.variable} ${bodoni.variable} font-sans bg-[#f0ead6]`}>{children}</body>
+      <body className={`${inter.variable} ${bodoni.variable} font-sans bg-[#f0ead6]`}>
+        <StyledJsxRegistry>{children}</StyledJsxRegistry>
+      </body>
     </html>
   )
 }

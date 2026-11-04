@@ -12,6 +12,8 @@ import { useEffect, useRef } from "react"
 const BARK = "138, 124, 98" // warm brown, same as the page rules
 const LEAF = "58, 122, 78" // the compound green
 const BIRD = "179, 32, 44" // the page's single red
+const GROW_AT = 450 // ms after navigation when the tree starts growing
+const GROW_SECS = 2.6 // wall-clock length of the growth
 
 type Segment = {
   x1: number
@@ -153,6 +155,13 @@ export default function SpecimenTree({ visible }: { visible: boolean }) {
     let lastW = 0
     let lastH = 0
     let baked: HTMLCanvasElement | null = null
+    let total = 0
+    let done: HTMLCanvasElement | null = null
+    let doneCtx: CanvasRenderingContext2D | null = null
+    let segOrder: Segment[] = []
+    let tipOrder: Tip[] = []
+    let segDone = 0
+    let tipDone = 0
 
     const rebuild = () => {
       const w = canvas.clientWidth
@@ -171,91 +180,190 @@ export default function SpecimenTree({ visible }: { visible: boolean }) {
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
       tree = buildTree(width, height, Math.floor(Math.random() * 1e9))
       baked = null
+      done = null
+      doneCtx = null
       const now = performance.now()
-      // only the first build animates; a later resize just re-fits the grown tree
-      growthStart = built ? now - 60000 : now
+      // only the first build animates; a later resize just re-fits the grown tree.
+      // The first growth is pinned to the page's own clock (just after the frame
+      // fades in), not to whenever this script happens to load, so it grows in
+      // step with the entrance wave instead of starting late.
+      growthStart = built ? now - 60000 : GROW_AT
       built = true
-      nextBird = now + 2200
+      total = tree.segments.reduce((m, s) => Math.max(m, s.start + s.dur), 0) + 0.6
+      nextBird = Math.max(now, growthStart + GROW_SECS * 1000) + 400
     }
 
     rebuild()
     const ro = new ResizeObserver(rebuild)
     ro.observe(canvas)
 
-    const ring = (c: CanvasRenderingContext2D, x: number, y: number, r: number, rot: number, alpha: number) => {
-      c.strokeStyle = `rgba(${LEAF}, ${alpha})`
-      c.lineWidth = 1
-      c.beginPath()
-      for (let i = 0; i < 6; i++) {
-        const a = rot + (i * Math.PI) / 3
-        const px = x + Math.cos(a) * r
-        const py = y + Math.sin(a) * r
-        if (i === 0) c.moveTo(px, py)
-        else c.lineTo(px, py)
-      }
-      c.closePath()
-      c.stroke()
-      // the inner circle that marks an aromatic ring
-      c.beginPath()
-      c.arc(x, y, r * 0.5, 0, Math.PI * 2)
-      c.strokeStyle = `rgba(${LEAF}, ${alpha * 0.6})`
-      c.stroke()
+    /** adds a branch's outline to a path. Branches are tapered solids rather
+        than constant-width strokes — that taper is most of what makes it read
+        as a tree instead of line art. The rounded joint at its base comes
+        back as its own path, since overlapping subpaths would cancel out */
+    const addSegment = (path: Path2D, s: Segment, p: number, joints?: Path2D) => {
+      const ex = s.x1 + (s.x2 - s.x1) * p
+      const ey = s.y1 + (s.y2 - s.y1) * p
+      const ew = s.w1 + (s.w2 - s.w1) * p
+      const dx = ex - s.x1
+      const dy = ey - s.y1
+      const len = Math.hypot(dx, dy)
+      if (len < 0.01) return null
+      const nx = -dy / len
+      const ny = dx / len
+      const h1 = s.w1 / 2
+      const h2 = ew / 2
+      path.moveTo(s.x1 + nx * h1, s.y1 + ny * h1)
+      path.lineTo(ex + nx * h2, ey + ny * h2)
+      path.lineTo(ex - nx * h2, ey - ny * h2)
+      path.lineTo(s.x1 - nx * h1, s.y1 - ny * h1)
+      path.closePath()
+      if (h1 <= 0.7) return null
+      const j = joints ?? new Path2D()
+      j.moveTo(s.x1 + h1, s.y1)
+      j.arc(s.x1, s.y1, h1, 0, Math.PI * 2)
+      return j
     }
 
-    /** paint the tree at a point in its growth into any context */
-    const drawTree = (c: CanvasRenderingContext2D, elapsed: number, alpha: number) => {
-      // Branches, drawn as tapered solids rather than constant-width strokes —
-      // that taper is most of what makes it read as a tree instead of line art.
-      c.fillStyle = `rgba(${BARK}, ${0.82 * alpha})`
-      for (const s of tree.segments) {
-        const p = Math.max(0, Math.min(1, (elapsed - s.start) / s.dur))
-        if (p <= 0) continue
-        const ex = s.x1 + (s.x2 - s.x1) * p
-        const ey = s.y1 + (s.y2 - s.y1) * p
-        const ew = s.w1 + (s.w2 - s.w1) * p
-        const dx = ex - s.x1
-        const dy = ey - s.y1
-        const len = Math.hypot(dx, dy)
-        if (len < 0.01) continue
-        const nx = -dy / len
-        const ny = dx / len
-        const h1 = s.w1 / 2
-        const h2 = ew / 2
-        c.beginPath()
-        c.moveTo(s.x1 + nx * h1, s.y1 + ny * h1)
-        c.lineTo(ex + nx * h2, ey + ny * h2)
-        c.lineTo(ex - nx * h2, ey - ny * h2)
-        c.lineTo(s.x1 - nx * h1, s.y1 - ny * h1)
-        c.closePath()
-        c.fill()
-        if (h1 > 0.7) {
-          c.beginPath()
-          c.arc(s.x1, s.y1, h1, 0, Math.PI * 2)
-          c.fill()
+    const TIP_DUR = 0.4
+
+    /** a tip's hexagon and its inner aromatic circle, added to shared paths */
+    const addRing = (hex: Path2D, dot: Path2D, t: Tip, r: number) => {
+      for (let j = 0; j < 6; j++) {
+        const a = t.angle + (j * Math.PI) / 3
+        const px = t.x + Math.cos(a) * r
+        const py = t.y + Math.sin(a) * r
+        if (j === 0) hex.moveTo(px, py)
+        else hex.lineTo(px, py)
+      }
+      hex.closePath()
+      dot.moveTo(t.x + r * 0.5, t.y)
+      dot.arc(t.x, t.y, r * 0.5, 0, Math.PI * 2)
+    }
+
+    /* While growing, finished branches and rings are painted once into a cache
+       layer; each frame only redraws the few still in motion. Redrawing every
+       finished limb each frame is what made the canopy stutter as it filled in. */
+
+    const startGrowthCache = () => {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2)
+      done = document.createElement("canvas")
+      done.width = Math.floor(width * dpr)
+      done.height = Math.floor(height * dpr)
+      doneCtx = done.getContext("2d")
+      doneCtx?.setTransform(dpr, 0, 0, dpr, 0, 0)
+      segOrder = [...tree.segments].sort((a, b) => a.start + a.dur - (b.start + b.dur))
+      tipOrder = [...tree.tips].sort((a, b) => a.at - b.at)
+      segDone = 0
+      tipDone = 0
+      sprites = []
+      for (let si = 0; si < SIZE_B; si++) {
+        const size = SIZE_MIN + ((SIZE_MAX - SIZE_MIN) * si) / (SIZE_B - 1)
+        for (let ri = 0; ri < ROT_B; ri++) {
+          const c = document.createElement("canvas")
+          c.width = c.height = Math.ceil(SPR * dpr)
+          const sc = c.getContext("2d")
+          if (!sc) continue
+          sc.setTransform(dpr, 0, 0, dpr, 0, 0)
+          const hex = new Path2D()
+          const dot = new Path2D()
+          addRing(hex, dot, { x: SPR / 2, y: SPR / 2, angle: (ri * Math.PI) / 3 / ROT_B, at: 0, size }, size)
+          sc.lineWidth = 1
+          sc.strokeStyle = `rgba(${LEAF}, 0.62)`
+          sc.stroke(hex)
+          sc.strokeStyle = `rgba(${LEAF}, ${0.62 * 0.6})`
+          sc.stroke(dot)
+          sprites[si * ROT_B + ri] = c
         }
       }
-      for (const tip of tree.tips) {
-        const p = Math.max(0, Math.min(1, (elapsed - tip.at) / 0.55))
-        if (p <= 0) continue
-        ring(c, tip.x, tip.y, tip.size * p, tip.angle, 0.62 * alpha * p)
+    }
+
+    /* an opening ring is stamped from a pre-drawn sprite (nearest size and
+       rotation) — one call instead of a dozen path calls with trig. Hundreds
+       open at once at the canopy, and building their paths was the stutter. */
+    const SIZE_MIN = 2
+    const SIZE_MAX = 5.5
+    const SIZE_B = 4
+    const ROT_B = 6
+    const SPR = SIZE_MAX * 2 + 3
+    let sprites: HTMLCanvasElement[] = []
+    const spriteFor = (t: Tip) => {
+      const si = Math.round(((t.size - SIZE_MIN) / (SIZE_MAX - SIZE_MIN)) * (SIZE_B - 1))
+      const rot = ((t.angle % (Math.PI / 3)) + Math.PI / 3) % (Math.PI / 3)
+      const ri = Math.round((rot / (Math.PI / 3)) * ROT_B) % ROT_B
+      return { img: sprites[si * ROT_B + ri], size: SIZE_MIN + ((SIZE_MAX - SIZE_MIN) * si) / (SIZE_B - 1) }
+    }
+
+    const drawGrowing = (elapsed: number, alpha: number) => {
+      if (!done || !doneCtx) startGrowthCache()
+      const dc = doneCtx!
+      // move anything that just finished into the cache
+      // (batched too: at the canopy hundreds finish in the same frame)
+      const fin = new Path2D()
+      const finJoints = new Path2D()
+      let anyFin = false
+      while (segDone < segOrder.length && segOrder[segDone].start + segOrder[segDone].dur <= elapsed) {
+        addSegment(fin, segOrder[segDone++], 1, finJoints)
+        anyFin = true
       }
+      if (anyFin) {
+        dc.fillStyle = `rgba(${BARK}, 0.82)`
+        dc.fill(fin)
+        dc.fill(finJoints)
+      }
+      const finHex = new Path2D()
+      const finDot = new Path2D()
+      let anyTip = false
+      while (tipDone < tipOrder.length && tipOrder[tipDone].at + TIP_DUR <= elapsed) {
+        const t = tipOrder[tipDone++]
+        addRing(finHex, finDot, t, t.size)
+        anyTip = true
+      }
+      if (anyTip) {
+        dc.lineWidth = 1
+        dc.strokeStyle = `rgba(${LEAF}, 0.62)`
+        dc.stroke(finHex)
+        dc.strokeStyle = `rgba(${LEAF}, ${0.62 * 0.6})`
+        dc.stroke(finDot)
+      }
+      ctx.globalAlpha = alpha
+      ctx.drawImage(done!, 0, 0, width, height)
+      ctx.globalAlpha = 1
+      // then only what is still in motion: branches still growing go into one
+      // shared path and one fill, and hair-thin twigs (whose taper can't be
+      // seen) into a single plain stroke
+      ctx.fillStyle = `rgba(${BARK}, ${0.82 * alpha})`
+      const limbs = new Path2D()
+      const joints = new Path2D()
+      const twigs = new Path2D()
+      for (let i = segDone; i < segOrder.length; i++) {
+        const s = segOrder[i]
+        if (s.start >= elapsed) continue
+        const p = Math.min(1, (elapsed - s.start) / s.dur)
+        if (s.w1 < 1.6) {
+          twigs.moveTo(s.x1, s.y1)
+          twigs.lineTo(s.x1 + (s.x2 - s.x1) * p, s.y1 + (s.y2 - s.y1) * p)
+        } else addSegment(limbs, s, p, joints)
+      }
+      ctx.fill(limbs, "nonzero")
+      ctx.fill(joints, "nonzero")
+      ctx.strokeStyle = `rgba(${BARK}, ${0.82 * alpha})`
+      ctx.lineWidth = 1.1
+      ctx.stroke(twigs)
+      for (let i = tipDone; i < tipOrder.length; i++) {
+        const t = tipOrder[i]
+        if (t.at >= elapsed) continue
+        const p = Math.min(1, (elapsed - t.at) / TIP_DUR)
+        const { img, size } = spriteFor(t)
+        if (!img) continue
+        const half = (SPR / 2) * (t.size / size) * p
+        ctx.globalAlpha = alpha * p
+        ctx.drawImage(img, t.x - half, t.y - half, half * 2, half * 2)
+      }
+      ctx.globalAlpha = 1
     }
 
-    /** once grown, render the tree once and reuse it — thousands of segments
-        are far too many to re-path every frame */
-    const totalGrowth = () => tree.segments.reduce((m, s) => Math.max(m, s.start + s.dur), 0) + 0.6
-
-    const bake = () => {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2)
-      const off = document.createElement("canvas")
-      off.width = Math.floor(width * dpr)
-      off.height = Math.floor(height * dpr)
-      const c = off.getContext("2d")
-      if (!c) return
-      c.setTransform(dpr, 0, 0, dpr, 0, 0)
-      drawTree(c, Number.POSITIVE_INFINITY, 1)
-      baked = off
-    }
+    const totalGrowth = () => total
 
     const drawBird = (b: Bird, now: number, alpha: number) => {
       const flap = 0.35 + 0.65 * Math.abs(Math.sin((now - b.born) / 150 + b.phase))
@@ -280,15 +388,19 @@ export default function SpecimenTree({ visible }: { visible: boolean }) {
       ctx.clearRect(0, 0, width, height)
 
       if (fade > 0.01 && width > 2) {
-        const elapsed = reduced ? 999 : (now - growthStart) / 1000
+        // eased: shoots up quickly, then the canopy settles in slowly
+        const t = Math.min(1, Math.max(0, (now - growthStart) / 1000 / GROW_SECS))
+        const eased = 1 - Math.pow(1 - t, 3)
+        const elapsed = reduced ? 999 : t >= 1 ? totalGrowth() + (now - growthStart) / 1000 : eased * totalGrowth()
 
         if (baked) {
           ctx.globalAlpha = fade
           ctx.drawImage(baked, 0, 0, width, height)
           ctx.globalAlpha = 1
         } else {
-          drawTree(ctx, elapsed, fade)
-          if (elapsed >= totalGrowth()) bake()
+          drawGrowing(elapsed, fade)
+          // fully grown: the cache already holds the whole tree
+          if (elapsed >= totalGrowth()) baked = done
         }
 
         // birds lift off a tip once the canopy is in
