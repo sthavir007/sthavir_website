@@ -9,10 +9,10 @@ type HoverKey = "ucsd" | "tjhsst" | "aether" | "1517" | "tjbiotech" | "music" | 
 
 // `cta` marks snapshots of things you can open, so the frame says so
 const IMAGES: Record<HoverKey, { src: string; alt: string; cta?: boolean }> = {
-  ucsd: { src: "/images/ucsd.jpg", alt: "at ucsd" },
-  tjhsst: { src: "/images/tjhsst.jpg", alt: "tjhsst graduation" },
-  aether: { src: "/images/aether.jpg", alt: "building at aether" },
-  "1517": { src: "/images/1517.jpg", alt: "1517 fund 2e camp" },
+  ucsd: { src: "/images/ucsd.jpg", alt: "at ucsd", cta: true },
+  tjhsst: { src: "/images/tjhsst.jpg", alt: "tjhsst graduation", cta: true },
+  aether: { src: "/images/aether.jpg", alt: "building at aether", cta: true },
+  "1517": { src: "/images/1517.jpg", alt: "1517 fund 2e camp", cta: true },
   tjbiotech: { src: "/images/tjbiotech.jpg", alt: "tj biotech club" },
   music: { src: "/images/astroworld.jpg", alt: "astroworld by travis scott" },
   qdots: { src: "/images/qdots.jpg", alt: "banana carbon quantum dots fluorescing under uv" },
